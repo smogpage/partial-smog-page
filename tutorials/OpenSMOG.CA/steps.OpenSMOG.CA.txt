@@ -1,0 +1,32 @@
+################ DESCRIPTION ###############
+
+Example for how to prepare and run a simulation with the CA model using SMOG 2 and OpenSMOG
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+ 
+Begin with the file 2ci2.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Prepare the PDB for SMOG 2. The tool smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. Apply smog_adjustPDB directly to the downloaded PDB file.
+ 
+>smog_adjustPDB -i 2ci2.pdb -o 2ci2.adjusted.pdb -removewater
+
+Generate your force field with smog2:  
+- The -CA flag indicates that the Clementi CA model should be used.
+- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 -i 2ci2.adjusted.pdb -CA -OpenSMOG -dname 2ci2.OpenSMOG.CA
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.ci2.OpenSMOG.CA.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of each setting.
+
+>python run.ci2.OpenSMOG.CA.py
+

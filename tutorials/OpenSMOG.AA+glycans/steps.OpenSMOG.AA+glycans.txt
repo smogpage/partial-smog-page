@@ -1,0 +1,35 @@
+################ DESCRIPTION ###############
+
+Example for generating and running a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will simulate the glycosylated SARS-CoV-2 spike protein
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+############## PRE-SMOG2 STEPS #############
+ 
+For this example, we will begin with a prepared PDB structure (described in Dodero-Rojas, Onuchic and Whitford, Elife, 2021): prefusion_with_glycans.pdb 
+To generate this pdb, we already used smog_adjustPDB to ensure that all residues were complete, including all glycans.  After that, we had to add many BOND lines, which define the covalent bonds between glycans and protein, as well as glycan-glycan in branched glycan groups.
+
+Download the SMOG 2 templates AA_glycans_Dodero21.v1, which are available at the SMOG 2 template repository. 
+
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+
+Generate your force field with smog2:  
+	- The -t flag indicates that the Dodero-Rojas model should be used.
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 -i prefusion_with_glycans.pdb -t AA_glycans_Dodero21.v1 -OpenSMOG -dname spike.OpenSMOG.AA+glycans
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.glycans.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.glycans.py
+

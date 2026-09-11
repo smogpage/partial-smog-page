@@ -1,0 +1,87 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<div id="title"><h1>SMOG 2 in Singularity</h1></div>
+
+<br>
+<h2>What is Singularity?</h2>
+Containers are units of software that package up code and all dependencies, so that applications can run quickly and reliably in different computing environments. <a href="https://sylabs.io/docs/">Singularity</a> is a common container software package that has been designed for use on shared compute clusters. While it can also be installed on personal computers, we have found <a href=/smog2/docker/>Docker</a> to be easier for personal usage. If you are using a shared academic resource, there is a good chance that Singularity is already available. Singularity containers for SMOG2 are accessible through the <a href="https://cloud.sylabs.io/library/smog-server/library/smog2">Sylabs SMOG-SERVER page</a>.
+
+<h2>How to access SMOG 2 containers for Singularity</h2>
+<p>If singularity is installed on your computer, the following command will pull the container for the most recent released version of SMOG 2:
+<br>
+<br>>$ singularity pull library://smog-server/library/smog2:stable
+<br>
+<p>If you want to use a different version, then change the tag "stable" to the desired version (e.g. gitversion, v2.4.4, v2.4.5-pre1, etc). The above command will download the container in the form of a Singularity Image Format file: smog2_&#60;tag&#62;.sif
+
+<p>You can also pull any of the SMOG 2 Docker images over to Singularity format, if you find that our Docker Hub repo has a version of interest. For this, you use a command of the following form:
+<br>
+<br>>$singularity pull smog2_stable.sif docker://smogserver/smog2:stable
+<br>
+<br> This will pull the Docker image and save it as the Singularity container file smog2_stable.sif. 
+
+<p>Regardless of how you obtain the sif file, the container can be launched for interactive use with:
+<br>
+<br>>$ singularity shell smog2_stable.sif
+<br>
+<br>The only visible difference will be that the command prompt says "Singularity". However, SMOG 2 and all SMOG Tools will be available in your path.  Just type "smog2" to get going. For detailed information on SMOG 2 usage, see the <a href=/tutorials/>SMOG Tutorials</a> page or SMOG 2 manual. 
+
+<p> When inside the container, there are a couple files that you can consult to obtain more information about container usage and contents. /opt/smog2/docker/README.docker describes container usage and /opt/containerinfo (only available in some images) has information about the specific contents of the image.
+<p>
+This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+</div>
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<div id="title"><h1>SMOG 2 in Docker</h1></div>
+<h2>What is Docker?</h2>
+As described at the <a href=https://www.docker.com>Docker website</a>, a container is a standard unit of software that packages up code and all its dependencies so the application runs quickly and reliably from one computing environment to another. Docker is a specific form of container software.  Generally, Docker is quite easy to use on a personal computer.  However, if you are using a cluster, <a href=/smog2/singularity/>Singularity</a> will likely be a more useful container strategy. 
+
+<h2>Using SMOG 2 with Docker</h2>
+We provide containerized version of SMOG 2 through the <a href=https://hub.docker.com/r/smogserver/smog2>SMOG 2 Docker Hub page</a>. If docker is running on your computer, the following command will pull the container to your local machine:
+<br>
+<br>>$ docker pull smogserver/smog2:stable
+<br>
+
+<p>If you want to use a different version, then change the tag "stable" to the desired version (e.g. gitversion, v2.4.4, v2.4.5-pre1, etc). The above command will download the container in the form of a Singularity Image Format file: smog2_&#60;tag&#62;.sif
+<br>
+<br>The container can then be launched with:
+<br>
+<br>>$ docker run -it --rm smogserver/smog2:stable
+<br>
+<br>You are initially placed into the directory /workdir inside the container at a bash prompt. Note that the container is essentially a stripped down version of Ubuntu Linux. vi and nano text editors are available. All smog2 executables are available in the $PATH. smog2, smog tools and smog-check may be found in /opt/smog2.
+<br>
+<br><em>Description of flags</em>
+<br>--rm : Automatically remove the container when it exits
+<br>-t : Give a shell-like experience (tty) 
+<br> -i : Make the container interactive
+<br>
+<br>IMPORTANT: You will want to connect the container to the files on your computer, e.g. to load PDB files and to write output files. This is done with the -v switch, which connects (mounts) a directory on your filesystem to a directory inside the container. This can be done however you like, but we typically use the following approach:
+<br>
+<br>>$ docker run -it --rm -v $(pwd):/workdir smogserver/smog2:stable
+<br>
+<br>In this case, the directory that the docker is called from ($pwd) i.e. present working directory, is mounted as /workdir in the container. As long as all the files you need are available in $pwd and its subdirectories, then they will be available to the container in /workdir and its subdirectories. The container will be unable to interact with any directories above $pwd. To belabor the point: any files edited or created in /workdir will appear or be edited on your actual disk in $pwd. Further, you must only mount to /workdir.  This is an empty directory in the container, so you should be able to mount any external directory to it without issues (though larger directories can reduce the performance of the container).
+<br>
+
+<p>
+This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+</div>
+</div>
+
+</body>
+
+</html>

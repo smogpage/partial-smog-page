@@ -1,0 +1,66 @@
+################ DESCRIPTION ###############
+
+Steps for running a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will introduce a custom potential for all nonbonded (non-contact) interactions
+We will also treat all atoms in TRP residues differently. 
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+############## PRE-SMOG2 STEPS #############
+
+
+Copy the default AA model templates. We will first modify them in order to change the contact potential. To avoid confusion, rename the templates SBM_AA+customNonbonded 
+
+Edit the .sif file to define the desired functional form for non-bonded interactions.  Add the following to the .sif file:
+  <CustomNonBonded 
+        OpenSMOGparameters="epsilon,rmin,kappa" 
+        OpenSMOGcombrule=" none " 
+        OpenSMOGpotential="epsilon*exp(-(r-rmin)*kappa)"
+        nbcutoff="2.0"
+  />
+
+In this example, we are assigning an exponential to all non-bonded interactions, using three parameters.  We also define nbcutoff (cutoff distance for nonbonded terms, excluding contacts) to be 2.0 nm.  While you can specify the cutoff at runtime with OpenSMOG, adding it to the template will ensure that this cutoff is always used when this force field is employed. If different values are given to OpenSMOG, this will supersede them.
+
+For demonstrative purposes, we will also edit the .bif file, so that all atoms in TRP residues are of nbType "NB_2".
+
+Give specific values for epsilon, rmin and kappa for each type of interaction in the model. This is accomplished by creating an "extras" file. An extras file is simply a file with a name that ends with "extras". In our case, we will call this file SBM_AA+customNonbonded.extras. We will add the following lines to the extras file:
+ 
+nonbond_params < NB_1 NB_1 1 5.0 0.3 2
+nonbond_params < NB_1 NB_2 1 2.0 0.4 2.5
+nonbond_params < NB_2 NB_2 1 2.0 0.4 2.5
+
+Explainer: "nonbond_params <" indicates that these are nonbonded parameters and that they should be added to the top/xml file, if the respective nbTypes are present in the system. The values are then: <nbType1> <nbType2> 1 <epsilon> <rmin> <kappa> .  The "1" is a legacy feature that is for back-compatibility with Gromacs. It has no effect when using OpenSMOG.
+
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+
+Begin with the file 2ci2.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. Accordingly, smog_adjustPDB may be applied directly to the downloaded PDB file.
+ 
+>smog_adjustPDB -i 2ci2.pdb -removewater -o 2ci2.adjusted.pdb
+
+Generate your force field with smog2:  
+	- The -t flag indicates that our new templates should be used.
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 \
+	-t SBM_AA+customNonbonded \
+	-i 2ci2.adjusted.pdb \
+	-opensmog \
+	-dname 2ci2.OpenSMOG.AA+customNonbonded
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+# At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.ci2.OpenSMOG.AA.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.ci2.OpenSMOG.AA.py
+
+When you run this, you should notice that the protein becomes very extended.  This is actually correct, given the parameters we just added.  We added a long-range repulsive interaction between all atoms, so the system naturally expands.  This model is not a recommended strategy, it is only an example for how to add heterogeneous nonbonded interactions.
+

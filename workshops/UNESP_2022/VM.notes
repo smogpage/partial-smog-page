@@ -1,0 +1,41 @@
+Here are some quick notes that can let you set up a machine for use with SMOG 2
+
+These notes were uses to set up an Ubuntu VM for use in a workshop
+
+Once ubuntu was installed via an image, then log in and:
+
+# prep for smog2
+
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get install -y --noinstall-recommends cpanminus vim git-all patch pdl default-jre libxml-simple-perl nano emacs make
+cpanm String::Util Exporter XML::Validator::Schema
+
+
+
+#smog2
+
+mkdir ~/BIN/smog2.4.5-pre1
+cd ~/BIN/smog2.4.5-pre1
+git clone -n https://github.com/smog-server/SMOG2.git .
+git checkout tags/v2.4.5-pre1
+rm -rf .git
+source configure.smog2
+
+
+# install OpenSMOG
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+
+chmod u+x Miniconda3-latest-Linux-x86_64.sh
+
+./Miniconda3-latest-Linux-x86_64.sh
+just install into base
+conda install -c conda-forge OpenSMOG
+
+# we want to use a newer version than available on conda
+
+git clone https://github.com/smog-server/OpenSMOG.git
+cp both .py files  and share to the conda directory
+
+
+# use web browser to download and VMD

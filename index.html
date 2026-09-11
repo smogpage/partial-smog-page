@@ -1,0 +1,81 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt class="here"><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+
+<div id="main">
+<div id="title"><h1>SMOG: Structure-based Models for Biomolecules</h1></div>
+<h2>A very brief introduction to structure-based modeling</h2>
+While originally developed for the study of protein folding, over the last 15 years we have worked to extend the applicability of structure-based models to investigate a broad range of biomolecular dynamics, including domain rearrangements in proteins, folding and ligand binding in RNA and large-scale rearrangements in ribonucleoprotein assemblies (e.g. the <a href="https://www.sciencedirect.com/science/article/abs/pii/S1046202318303931">ribosome</a>). In its simplest form, a structure-based model defines a particular structure (typically obtained from X-ray, cryo-EM or NMR) as the global energetic minimum. Oftentimes, this single-basin description can provide rich information about complex processes. When this simple representation is insufficient to describe the process of interest, the model can be easily extended to include multiple basins of attraction, as well as describe non-specific effects (e.g. electrostatic or solvation effects). While coarse-grained variants of this model have had considerable success in expanding our understanding of protein folding, all-atom structure-based models are now widely used to study all types of biomolecules (complete descriptions can be found <a href=/refs.html#primary>here</a>). Additionally, with the computational simplicity of the models, they are proving to be very useful for structural modeling purposes, including atomic modeling of cryo-EM, SAXS and biochemical data.
+
+<p>To increase the accessibility of these modeling techniques, we provide the smog-server webtool, as well as the downloadable <a href="/smog2/">SMOG 2</a> software, which are able to generate SMOG models for use with Gromacs, NAMD, LAMMPS and OpenMM. While the webtool provides support for proteins, nucleic acids, and some ligands, SMOG 2 enables the application of structure-based models to any type of polymer-ligand system. For in-depth descriptions of the underlying models, and for examples of how to use the models, we refer you to the <a href=/refs.html#primary>original publications</a> and recent <a href=/refs.html#reviews>review articles</a>.
+
+<h2> How to prepare and simulate a SMOG model for a specific biomolecule</h2>
+While we provide a range of examples on the <a href=/tutorials/>Tutorials and Examples</a> page, here are the basic steps for using a SMOG model:
+<br>
+<br>
+<b>Step 1:</b> <a href=/prepare_a_simulation.html>Prepare the simulation.</a> You first need to generate a force field for your molecular system.  This may be accomplished in two ways.
+<ul>
+<li>(recommended) <em><a href=/smog2/>Download SMOG 2</a></em> SMOG 2 provides comprehensive support for SMOG models. It provided a set of default models and also allows you to define your own styles of SMOG models. Customized models can include additional types of interactions (e.g. electrostatics) and define new residues (e.g. post-transcriptional modifications). For large-scale systems and maximal OpenMM compatibility, it is strongly recommended that you use SMOG 2 with OpenSMOG.
+<li> <em><a href=/cgi-bin/GenTopGro.pl>Use the Webtool</a></em> We have made some SMOG models available through our smog-server web interface. All you need to do is provide a PDB structure file, specify which parameters you would like to use, and the webtool will generate the input files that will define the model.
+</ul>
+<b>Step 2:</b> <a href=/performing_a_simulation.html>Run the simulation.</a> Due to some technical differences between structure-based models and many other commonly used models, there are a few additional considerations that will ensure maximal performance of your calculations. Click <a href=/performing_a_simulation.html>here</a> for details on how to run a SMOG model in Gromacs, NAMD, OpenMM, or LAMMPS. It is highly recommended that you read this information, even if you are a simulation expert.<br>
+<br>
+<b>Step 3:</b> <a href=/SB_analysis.html>Analyze the results.</a> Once your simulations have finished, there are many forms of analysis that may be of interest. There are numerous analysis tools available with the Gromacs distribution, VMD has a powerful Tcl scripting interface, and MDTraj is quite useful. <br>
+
+<p>
+This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+</div>
+</div>
+
+</body>
+
+</html>

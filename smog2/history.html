@@ -1,0 +1,210 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG forcefield, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<center><h1>SMOG 2 history</h1>
+</center>
+
+Since new versions occasionally have bug fixes, it is recommended that you only use the most recent released version. If you would like to test out the newest options available, then you may be interested in trying the beta version.
+
+<h2>Updates</h2>
+<ul>
+<li><a name="notes2.7beta"></a><b>2.7beta</b> 
+<ul>
+<li> SMOG2: Fixed bug related to use of simultaneous BOND atomCount settings. 
+<li> extract: Fixed bug when using -restraints and -opensmog options. Incorrect positions were sometimes given in the output XML.
+</ul>
+
+
+<li><a name="notes2.6"></a><b>2.6</b> 
+<ul>
+<li> OpenSMOG: Removed exclusions from .top file. The output xml file now indicates which exclusions to generate.
+<li> OpenSMOG: Added support for custom angles.
+<li> OpenSMOG: Added support for custom externals.
+</ul>
+
+<li><a name="notes2.5"></a><b>2.5</b> 
+<ul>
+<li> added support for custom dihedral potentials (OpenSMOG, only)
+<li> added smog_modifyXML - equivalent to smog_scale-energies, except for use with OpenSMOG XML files
+<li> adjustPDB : changed output PDB to left justify the atom names.  This has no effect on how SMOG 2 works, but it does make the PDB files more consistent with typical PDB formatting. 
+<li> adjustPDB : altered behavior, so that -insertTER will begin reindexing atoms and residues if the chainID changes
+<li> added editgro
+<li> ions : fixed issue with non-orthorhombic PBCs
+</ul>
+
+<li><a name="notes2.4.5"></a><b>2.4.5</b> 
+<ul>
+<li> simplified configuration and testing steps
+<li> added support for the zsh shell
+<li> added more descriptive error messages
+<li> fixed bug in adjustPDB that would throw a premature error when processing long chains
+<li> moved SMOG-CHECK into the primary SMOG 2 distribution
+<li> improved support for non-standard user-define BONDs
+<li> added ability to define mandatory cutoffs for OpenSMOG potentials
+<li> add more error checking when using OpenSMOG potentials
+</ul>
+
+<li><p><b>August 27, 2022: Moved all repos to GitHub</b>
+
+<li><p><a name="notes2.4.4"></a><b>2.4.4</b>: 
+<ul>
+<li> Improvements to the preprocessing tool smog_adjustPDB that reduce the need for users to "clean up" a PDB file manually
+<li> Improved custom potential and extras parsing and processing checks
+<li> Bug fixed related to ordering of attributes in the residue element in a bif file. This issue did not affect any official force fields, but customized force fields may have been affected. If the "name" attribute was not the first attribute listed for amino acid residues, then there could be differences in the produced contact map.
+</ul>
+
+
+
+<li><a name="notes2.4.2"></a><b>2.4.2</b> 
+<ul>
+<li> OpenSMOG: support added for nonbonded parameters
+</ul>
+
+
+
+<li><a name="notes2.4.1"></a><b>2.4.1</b> 
+<ul>
+<li> OpenSMOG: bug fix for gaussian potentials
+<li> OpenSMOG: 1/2 prefactor added for bonds type6
+</ul>
+
+<li><a name="notes2.4"></a><b>2.4</b> 
+<ul>
+<li> OpenSMOG support added for contacts
+<li> various improvements to performance for large systems
+<li> improved support for non-specific interactions
+</ul>
+
+<li><a name="notes2.3"></a><b>2.3</b> 
+<ul>
+<li> Improved error messaging throughout the tools 
+<li> Improved ability to introduce non-specific (e.g. CHARMM, or AMBER) terms within a SMOG model
+<li> General clean-up of the code
+<li> Corrected inconsistent use (Gromacs vs. SMOG conventions) when giving specific dihedral angles values in templates
+<li> Fixed bug relating to dihedrals with even multiplicities 
+<li> smog_adjustPDB: Added a variety of new options and rigorous residue matching
+<li> Added -large option in adjustPDB, which allows PDB files to have very large chains (~1 billion atoms and ~15 million residues)
+<li> Fixed a missing bond in DA and DG in default AA models 
+<li> Implemented additional bonded checks in smog-check for supported templates
+<li> Significantly extended smog-check routines
+</ul>
+<li><a name="notes2.2"></a><b>2.2</b> 
+<ul>
+<li> Fixed minor bug in adjustPDB that prevented RNA tails from being renamed.
+<li> Minor bug, pertaining to placement of ions in smog_ions. 
+<li> Performance of smog_ions significantly improved (>1k-fold) for large (>10k atom) systems.
+<li> Added check so only nonbond_params in extras file will be written if they are present in the generated system.
+<li> Corrected issues with definitions of dihedrals in ligands in default models.
+<li> Added more stringent template verification routines.
+<li> Improved robustness of dihedral/angle/bond matching routines.
+<li> Added more tests for dihedral/angle/bond matching routines.
+<li> Added AMP, ADP, ATP, GDP, GTP and extended smog-check for ligands
+<li> Added ability to process single-residue chains with smog_adjust
+<li> Added ability for smog-check to test compatibility with grompp
+</ul>
+<li><a name="notes2.1"></a><b>2.1</b> 
+<ul>
+<li> Improved error messaging for inconsistent bif-pdb atom naming. 
+<li> Added a fix to command line parsing in smog_adjustPDB. 
+<li> Significant performance improvements (factor of 3-4) for "vanilla" models and large systems. 
+<li> Extended output messaging.
+<li> Introduction to CPAN added to manual. 
+<li> Description of force field corrected in manual.
+<li> smog_extract module added.
+<li> Increased default excluded volume in SBM_AA+gaussian, so that it is consistent with SBM_AA.
+<li> Added more checks for mismatched atoms in improper connections.
+<li> Added MIA residue to Whitford09 templates.
+<li> Added connection definition for nucleic to protein (e.g. in aminoacyl-tRNA).
+<li> Removed officially-unsupported templates from distro. Now they may be found in the force field repo.
+<li> Changes option -warnonly to -warn N.  Rather than ignore all errors, the first N can be considered warnings. -1 indicates that all errors will be converted to warnings. 
+<li> smog_ion module added. 
+<li> Cleaned up a variety of routines.
+<li> Added more robust template checks.
+</ul>
+
+<li><a name="notes2.0.3"></a><b>2.0.3</b> 
+<ul>
+<li> Added -rescaleCD option. 
+<li> Improved performance of error checking.
+<li> Minor cleanup of code.
+</ul>
+
+
+<li><a name="notes2.0.2"></a><b>2.0.2</b> 
+<ul>
+<li> Added error message when END is missing after ATOM lines. 
+<li> Chain ordering in ndx file is now numerical.
+<li> Added free_bond routines.
+<li> Fix to pairType assignment.  nbType was used for contact function matching.  Now, pairType is used.
+</ul>
+
+
+<li><a name="notes2.0.1"></a><b>2.0.1</b> 
+<ul>
+<li> Updated license information.
+<li> Updated warning messages.
+<li> Added additional error checks.
+</ul>
+<li><a name="notes2.0"></a><b>2.0</b> 
+<ul>
+<li> Initial release of standalone SMOG 2 software package.
+</ul>
+</ul>
+
+
+
+
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

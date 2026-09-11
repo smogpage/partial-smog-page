@@ -1,0 +1,95 @@
+################ DESCRIPTION ###############
+
+Example for how to generate and run a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will add a new residue (Selenocystine, or SEC)
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+############## PRE-SMOG2 STEPS #############
+
+Copy the default AA model templates and rename them SBM_AA+newResidue.
+
+In the .bif file, copy the residue element named "CYS" and call the copy "SEC".  Also, change the SG (gamma sulphur) atom to SE (selenium). That is, add the following residue definition:
+
+    <!--SELENOCYSTEINE-->
+    <residue name="SEC" residueType="amino">
+      <atoms>
+        <atom bType="B_1" nbType="NB_1" pairType="C_1">N</atom>
+        <atom bType="B_1" nbType="NB_1" pairType="C_1">CA</atom>
+        <atom bType="B_1" nbType="NB_1" pairType="C_1">C</atom>
+        <atom bType="B_1" nbType="NB_1" pairType="C_1">O</atom>
+        <atom bType="B_1" nbType="NB_1" pairType="C_1">CB</atom>
+        <atom bType="B_1" nbType="NB_1" pairType="C_1">SE</atom>
+      </atoms>
+      <bonds>
+        <!--BACKBONE-->
+        <bond energyGroup="bb_a">
+          <atom>N</atom>
+          <atom>CA</atom>
+        </bond>
+        <bond energyGroup="bb_a">
+          <atom>CA</atom>
+          <atom>C</atom>
+        </bond>
+        <bond energyGroup="bb_a">
+          <atom>C</atom>
+          <atom>O</atom>
+        </bond>
+        <!--FUNCTIONAL GROUP-->
+        <bond energyGroup="sc_a">
+          <atom>CA</atom>
+          <atom>CB</atom>
+        </bond>
+        <bond energyGroup="sc_a">
+          <atom>CB</atom>
+          <atom>SE</atom>
+        </bond>
+      </bonds>
+      <impropers>
+        <improper>
+          <atom>CB</atom>
+          <atom>CA</atom>
+          <atom>C</atom>
+          <atom>N</atom>
+        </improper>
+      </impropers>
+    </residue>
+
+
+In order to use smog_adjustPDB, we need to create a suitable mapping file. For this, copy the default map distributed wit SMOG 2 (found in <SMOG2 DIR>/share/mapfiles/sbmMapExact) and name it sbmMapExact+SEC.
+
+In this new mapping file, add the following residue definition: 
+
+residue SEC C CA CB N O SE
+
+
+Now we need to make some modifications to our PDB file. Begin with the file 3eao.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Since the residues NAP and FAD are not defined in the current model, we will delete them. One could also add these ligands to the model, if desired. Let's call the modified file 3eao.noligands.pdb 
+
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. smog_adjustPDB may be applied directly to the downloaded PDB file.
+
+>smog_adjustPDB -i 3eao.noligands.pdb  -map sbmMapExact+SEC -removewater -o 3eao.noligands.adjusted.pdb
+ 
+
+Generate your force field with smog2:  
+- The -t flag indicates that the new templates should be used
+- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 -i 3eao.noligands.adjusted.pdb -t SBM_AA+SEC -dname 3eao.noligands
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.3eao.OpenSMOG.AA.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.3eao.OpenSMOG.AA.py
+

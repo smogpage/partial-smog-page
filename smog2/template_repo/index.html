@@ -1,0 +1,216 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG forcefield, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<center><h1>SMOG 2</h1>
+<h2>SMOG 2 Template Repository</h2>
+<h3><a href="/smog2/#manuscript">Manuscripts</a>  &nbsp <a href="/smog2/#manual">Manual</a> &nbsp <a href="/smog2/#download">Download</a> &nbsp <a href="/smog2/#check">SMOG-CHECK</a> &nbsp <a href="/smog2/template_repo/">Force Field Repo</a> &nbsp <a href="/smog2/history.html">Version History</a>&nbsp <a href="/smog2/OpenSMOG/">OpenSMOG</a></h3>
+</center>
+
+<font size="+0"><p>
+One of the key features of SMOG 2 is that the force fields are portable.  That is, you can share new models by simply making your template files available. Officially-supported force fields (i.e. those tested by smog-check) are included as part of the default distribution. Other force fields are available here. As force fields are integrated within smog-check, they may be moved to the standard SMOG 2 bundle. Most templates will include a README that provides a detailed description of the model. Please note that not all force fields are supported by official versions of Gromacs. If the force field is only intended for use with OpenMM (OpenSMOG) or a modified (i.e. unofficial) version of Gromacs, then it will be indicated in the README. If you would like to have your force field made available, please <a href="mailto:info@smog-server.org">contact us</a>.
+<div style="display: block;overflow: auto;">
+<table border="1" >
+  <col>
+  <col width="200">  
+  <col width="130">  
+  <col width="200">
+  <col width="50">  
+  <col>  
+  <col width="50">  
+  <col width="50">  
+  <tr>
+    <td><b>Force Field Name</b></td>
+    <td><b>Description</b></td> 
+    <td><b>Contributor</b></td> 
+    <td><b>Reference</b></td> 
+    <td><b>File</b></td>
+    <td><b>md5sum</b></td>
+    <td><b>SMOG version</b></td>
+    <td><b>Notes</b></td>
+  </tr>
+  <tr>
+    <td>SBM_AA+hydrogen</td>
+    <td>AA model with explicit hydrogens </td> 
+    <td>Heiko Lammert</td> 
+    <td></td>
+    <td><a href=SBM_AA+hydrogen.tar.gz>.gz</a></td>
+    <td>60f428446eae30270caac96e9c6d50a4</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>SBM_AA_charged</td>
+    <td>AA model with charges</td> 
+    <td>Jeff Noel</td> 
+    <td></td>
+    <td><a href=SBM_AA_charged.tar.gz>.gz</a></td>
+    <td>fbf31d41ac2d7de8cf0c473c693dc074</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>ENM</td>
+    <td>AA model with elastic network for contacts </td> 
+    <td>Jeff Noel</td> 
+    <td></td>
+    <td><a href=ENM.tar.gz>.gz</a></td>
+    <td>13bcaffe7c66808d845f035a04ad215c</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>SBM_AA-amber-bonds</td>
+    <td>AA model with bond angles and lengths from AMBER </td> 
+    <td>Paul Whitford</td> 
+    <td><a href="https://www.mdpi.com/1999-4915/12/11/1273/htm">Viruses, 12, 1273, 2020</a></td>
+    <td><a href=SBM_AA-amber-bonds.tar.gz>.gz</a></td>
+    <td>8f05f4c6dc7362783b7dfbf69d5056ea</td>
+    <td>2.3</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>AA_glycans_Dodero21.v1</td>
+    <td>SBM_AA-amber-bonds with glycans added </td> 
+    <td>Paul Whitford</td> 
+    <td><a href="https://elifesciences.org/articles/70362">eLife, 10, e70362, 2021</a></td>
+    <td><a href="AA_glycans_Dodero21.v1.tar.gz">.gz</a></td>
+    <td>02fb7bce50d7382de7feccfcfdbf8361</td>
+    <td>2.4</td>
+    <td></td>
+  </tr>
+ <tr>
+    <td>AA_ions_Wang22.v1</td>
+    <td>Effective ion potentials with AMBER bonded geometry (Shadow contacts)</td> 
+    <td>Ailun Wang</td> 
+    <td><a href="https://pubs.acs.org/doi/10.1021/jacs.2c04082">JACS, 2022</a></td>
+    <td><a href="AA_ions_Wang22.v1.tar.gz">.gz</a></td>
+    <td>29345ccb1840bc69d70b8ba4f689ac7b</td>
+    <td>2.4.4</td>
+    <td><a href="#note1">1</a>,<a href="#note2">2</a></td>
+  </tr>
+  <tr>
+    <td>AA_ions_cutoff_Wang22.v1</td>
+    <td>Effective ion potentials with AMBER bonded geometry (cutoff contacts)</td> 
+    <td>Ailun Wang</td> 
+    <td><a href="https://pubs.acs.org/doi/10.1021/jacs.2c04082">JACS, 2022</a></td>
+    <td><a href="AA_ions_cutoff_Wang22.v1.tar.gz">.gz</a></td>
+    <td>93bec930a65261051897974d2cd8cd11</td>
+    <td>2.4.4</td>
+    <td><a href="#note1">1</a>,<a href="#note2">2</a></td>
+  </tr>
+ 
+  <tr>
+    <td>AA_12-18_Wang22.v1</td>
+    <td>SMOG model 12-18 non-bonded terms and AMBER bonded geometry (Shadow contacts)</td> 
+    <td>Ailun Wang</td> 
+    <td><a href="https://pubs.acs.org/doi/10.1021/jacs.2c04082">JACS, 2022</a></td>
+    <td><a href="AA_12-18_Wang22.v1.tar.gz">.gz</a></td>
+    <td>2683a903d24bd3d96f361870b9b3fd9c</td>
+    <td>2.4.4</td>
+    <td><a href="#note1">1</a>,<a href="#note2">2</a></td>
+  </tr>
+  <tr>
+    <td>AA_12-18_cutoff_Wang22.v1</td>
+    <td>SMOG model 12-18 non-bonded terms and AMBER bonded geometry (cutoff contacts)</td> 
+    <td>Ailun Wang</td> 
+    <td><a href="https://pubs.acs.org/doi/10.1021/jacs.2c04082">JACS, 2022</a></td>
+    <td><a href="AA_12-18_cutoff_Wang22.v1.tar.gz">.gz</a></td>
+    <td>303b523c32d56d522fd06ccfd56a7bad</td>
+    <td>2.4.4</td>
+    <td><a href="#note1">1</a>,<a href="#note2">2</a></td>
+  </tr>
+
+  <tr>
+    <td>AA_PTM_Hassan24.v1</td>
+    <td>SBM_AA-amber-bonds with modified RNA residues added </td> 
+    <td>Asem Hassan</td> 
+    <td><a href="https://www.nature.com/articles/s41467-024-48163-x">Nature Comm, 2024</a></td>
+    <td><a href="AA_PTM_Hassan24.v1.tar.gz">.gz</a></td>
+    <td>6a3711ebd68d5fd05c99f4d1dcfa6fe1</td>
+    <td>2.4</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>AA_PTM_Hassan24.v2</td>
+    <td>AA_PTM_Hassan24.v1 with additional modified residues </td> 
+    <td>George Wanes</td> 
+    <td><a href="https://www.sciencedirect.com/science/article/pii/S0969212625003065">Structure, 2025</a></td>
+    <td><a href="AA_PTM_Hassan24.v2.tar.gz">.gz</a></td>
+    <td>5b3a0e0af437547024d8e317f6b79e0c</td>
+    <td>2.4</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>AA_inner-ion_Wanes26.v1</td>
+    <td>All-atom model with explicit inner-shell ions</td>
+    <td>George Wanes</td> 
+    <td><a href="https://www.pnas.org/doi/10.1073/pnas.2527693123">PNAS, 2026</a></td>
+    <td><a href="AA_inner-ion_Wanes26.v1.tar.gz">.gz</a></td>
+    <td>e3966d3eb9f3b8177f6c8add5ab96fc5</td>
+    <td>2.4.4</td>
+    <td></td>
+  </tr>
+
+
+
+</table>
+</div>
+<br><b>Notes</b> 
+<p><a name="NA">N/A</a>: templates will be released upon publication.
+<p><a name="note1">1</a>: Gromacs Support: These templates generate files that are for use with an unofficial modified version of Gromacs 5.1.4 that can be found <a href="/extension/#gaussnb">here</a>. 
+
+<p><a name="note2">2</a>: OpenSMOG Support: These templates can be used to generate force fields for use with OpenSMOG v1.1.0, or later.
+<p>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

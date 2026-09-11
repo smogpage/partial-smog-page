@@ -1,0 +1,91 @@
+################ DESCRIPTION ###############
+
+Example of how to generate and run a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will look at a protein that has an Iron-Sulfer cluster. This will require us to add a new residue that can be processed by SMOG 2. 
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+
+
+############## PRE-SMOG2 STEPS #############
+
+In this example, we will want to simulate a system that contains an Iron-sulfur cluster, called FES. Since this is not a residue that is defined in the default model, we will need to define the properties of an FES residue.  This will require some changes to the .bif file, as well as the mapping file.
+
+To start, we will copy the default mapping file.  This may be found in the main directory of SMOG2: <MAIN SMOG 2 DIR>/share/mapfiles/sbmMapExact 
+
+Rename the mapping file sbmMapExact+novelLigand
+
+Add the FES residue to the mapping file.  For simplicity, we are just going to indicate that there is nothing to change about FES clusters.  That is, add the following line to the mapping file:
+
+ignoreres FES
+
+The reason for still adding this to the mapping file is that it will allow us to adjust the rest of the PDB file, even if FES is assumed to have atom names that are compatible with the force field (yet to be defined).
+
+Copy and rename the default AA templates.  We will call them SBM_AA+novelLigand. 
+
+In the file SBM_AA+novelLigand/SBM_AA+novelLigand.bif, we will add a new residue by adding the following definition as a child element of the <residues> parent:
+
+    <residue name="FES" residueType="ligand">
+      <atoms>
+        <atom bType="B_FES" nbType="NB_1" pairType="C_1">FE1</atom>
+        <atom bType="B_FES" nbType="NB_1" pairType="C_1">S1</atom>
+        <atom bType="B_FES" nbType="NB_1" pairType="C_1">FE2</atom>
+        <atom bType="B_FES" nbType="NB_1" pairType="C_1">S2</atom>
+      </atoms>
+      <bonds>
+        <bond energyGroup="r_l">
+          <atom>FE1</atom>
+          <atom>S1</atom>
+        </bond>
+        <bond energyGroup="r_l">
+          <atom>S1</atom>
+          <atom>FE2</atom>
+        </bond>
+        <bond energyGroup="r_l">
+          <atom>FE2</atom>
+          <atom>S2</atom>
+        </bond>
+        <bond energyGroup="r_l">
+          <atom>S2</atom>
+          <atom>FE1</atom>
+        </bond>
+      </bonds>
+    </residue>
+
+
+In the SBM_AA+novelLigand/SBM_AA+novelLigand.b file, we will add the following child element to the <bonds> parent element.
+
+    <bond func="bond_harmonic(0.21,10000)">
+      <bType>B_FES</bType>
+      <bType>B_FES</bType>
+    </bond>
+
+This will define all bonds between two atoms of bType=B_FES to be a distance of 0.21 nm.  You do not need to define a static value. However, if you do not, you will receive warnings about long bonds in the system.  In the default AA model, an error is thrown if a bond is longer then 0.2 nm.  You can ignore the errors with -warn, or you can just define their distances in the .b file.
+
+ 
+######### USING SMOG2 AND SMOG-TOOLS #######
+ 
+Begin with the file 3p63.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. Accordingly, smog_adjustPDB may be applied directly to the downloaded PDB file.
+ 
+>smog_adjustPDB -i 3p63.pdb -o 3p63.adjusted.pdb -map sbmMapExact+FES -insertTER
+
+Explainer: the -insertTER flag will indicate that adjustPDB should prompt the user if non-sequential residue numbers are detected.  At each instance, the user may select yes/no/all, to indicate whether a TER line should be included. In this system, the first two instances are where residue numbers jump from 12 to 15. This is due to the fact that this structure has a 2-residue deletion in a single loop.  So, do not accept the first two TER insertions, since chemically the chain is not broken.  The third prompt will ask about inserting a TER line between two FES molecules.  Since the FES molecules are actually different chains, accept this TER insertion. 
+
+ 
+Generate your force field with smog2:  
+	- The -t flag is used to indicate which model/templates to use
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 -i 3p63.adjusted.pdb  -t SBM_AA+novelLigand -OpenSMOG -dname 3p63.OpenSMOG.AA+novelLigand 
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.ci2.OpenSMOG.AA.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.ci2.OpenSMOG.AA.py
+

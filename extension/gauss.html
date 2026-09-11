@@ -1,0 +1,178 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="http://smog-server.org/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt class="here"><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<h1>Gaussian contact potentials</h1>
+<center><h2>Bringing freedom of creativity to the SMOG modeller!</h2></center>
+
+<h3>Download</h3>
+<blockquote>
+
+A tarball is available <a href="gromacs-4.5.4_sbm1.0.tar.gz">here</a>. The extension is added to GROMACS v4.5.4. Compile GROMACS as you would any distribution, nothing special is required at compile time. This provides three new non-bonded pair interactions that can be included in the <code>[ pairs ]</code> section of the topology (.top). README.SBM in the root directory has helpful information that is reproduced below. A script that will convert a <code>[ pairs ]</code> section between Lennard-Jones and Gaussians in the all-atom model is available <a href="LJ2gauss.bash" type="text/plain">here</a>. The width parameter (sigma) for Calpha models is typically a constant 0.5 &Aring, regardless of the native distance.
+<p>
+Here is an excerpt from a <a href="http://smog.rice.edu/noel/book_chapter_sbm.pdf">book chapter</a> (<a href="http://www.springerlink.com/content/j67170788007270w/fulltext.pdf">Springer book</a>) on the contact potentials in SMOG which will introduce the Gaussians.
+</blockquote>
+<img src="contactsPDF.png" style="display:block;margin-left: auto;margin-right:auto;margin-top:20px" />
+
+<h3>Example topology</h3>
+<blockquote>
+<code>
+Excerpt of topology ***************<br>
+[ pairs ] <br>
+;normal LJ 6-12 pairs <br>
+4 497 1 6.7105667E-02 1.4373939E-03<br>
+5 183 1 8.8991727E-02 1.6851818E-03<br>
+5 338 1 1.5051600E-02 1.2052582E-04<br>
+5 339 1 1.2527527E-02 8.3485455E-05<br>
+6 183 1 5.7529955E-02 7.0429500E-04<br>
+; .... <br>
+;standalone Gaussian well<br>
+1 316 5 0.818992 0.279187 0.0474239<br>
+; ... <br>
+;Gaussian well with connected a/r^12 repulsive core <br>
+;(must be used with [ exclusions ])<br>
+1 316 6 0.818992 0.279187 0.0474239 0.59605E-09<br>
+; ... <br>
+;dual basin Gaussian with connected a/r^12 repulsive core <br>
+;(must be used with [ exclusions ])<br>
+1 316 7 0.819006 0.279187 0.0474239 0.426216 0.072399 0.59605E-09<br>
+; ... <br>
+*****************************************************<br>
+</code>
+</blockquote>
+<a name="gauss"></a>
+<h3>Single Gaussian contact potential</h3>
+<blockquote>
+<img src="images/singleGauss.png" style="display:block;margin-left: auto;margin-right:auto;margin-top:20px" />
+<br>From README.SBM:
+<hr><code>
+bare Gaussian potential:<br>
+
+V_ij = -A exp( - ( r - mu )^2 / ( 2 sigma^2 ) )<br>
+
+selected in the [ pairs ] section;<br>
+
+; i j ftype A mu sigma<br>
+
+with ftype = 5<br>
+
+note that the amplitude of the Gaussian is -A.<br>
+
+This can be used with a separate repulsion term or without it.<br>
+----------------------------------------------<br>
+
+combined Gaussian - r^-12 potential:<br>
+
+V_ij = A({ 1 + (1/A)a/(r^12) }{ 1 - exp[ - ( r - mu )^2 / ( 2  sigma^2 ) ] }-1)<br>
+
+= A({ 1 + R/A }{ 1 - G } - 1)<br>
+
+= R - AG - RG<br>
+
+
+this construction keeps the minimum of V fixed at ( mu, -A )<br>
+
+selected in the [ pairs ] section of the .top file<br>
+
+; i j ftype A mu sigma a<br>
+
+with ftype = 6<br>
+
+note that the amplitude of the Gaussian is -A.<br>
+
+IMPORTANT: the term R (and its derivative) now IS calculated here,
+the separate repulsion defined in [ atomtypes ] should be removed
+for each pair using this potential by [ exclusions ] :<br>
+
+; i j<br>
+
+note that the section [ bonds ] must appear before [ exclusions ] (as of 3.3)<br>
+
+</code><hr>
+</blockquote>
+<h3>Double well Gaussian contact potential</h3>
+<a name="dualGauss"></a>
+<blockquote>
+<img src="/images/doubleGauss.png" style="display:block;margin-left: auto;margin-right:auto;margin-top:20px" />
+<br>From README.SBM:
+<hr><code>
+two Gaussians & r^-12 repulsion:<br>
+
+V_ij = A[ (1+R/A) (1-F) (1-G) - 1]<br>
+
+= R - AF - AG + AFG - FR - GR + FGR<br>
+
+F = exp( - ( r - mu1 )^2 / ( 2 sigma1^2 ) )<br>
+G = exp( - ( r - mu2 )^2 / ( 2 sigma2^2 ) )<br>
+R = a/(r^12)<br>
+
+selected in the [ pairs ] section;<br>
+
+; i j ftype A mu1 sigma1 mu2 sigma2 a<br>
+
+with ftype = 7<br>
+
+both Gaussians get the common amplitude -A,
+minima of the resulting function are (mu1,-A) & (mu2,-A)
+
+as for the single Gaussian, [ exclusions ] are required<br>
+</code><hr>
+
+<p><b><a href=/refs.html>References</a></b>
+
+
+
+<p> Page created on 4/30/11.
+<p><p>
+<p>
+This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+</div>
+</div>
+</body>
+</html>

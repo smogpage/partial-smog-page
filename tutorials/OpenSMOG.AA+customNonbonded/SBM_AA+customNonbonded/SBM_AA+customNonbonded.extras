@@ -1,0 +1,6 @@
+; extras file for example custom non-bonded potentials in SMOG2/OpenSMOG
+; Note: the "1" in the third column is not used.  It is just related to legacy compatibility
+; features for Gromacs (even though this model can not be used with Gromacs)
+nonbond_params < NB_1 NB_1 1 5.0 0.3 2
+nonbond_params < NB_1 NB_2 1 2.0 0.4 2.5
+nonbond_params < NB_2 NB_2 1 2.0 0.4 2.5

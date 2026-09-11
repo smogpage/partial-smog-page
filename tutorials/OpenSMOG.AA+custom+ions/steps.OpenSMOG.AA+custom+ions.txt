@@ -1,0 +1,80 @@
+################ DESCRIPTION ###############
+
+Example for how to generate and run a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will add a coulomb potential between charges, plus additional non-specific effective potentials, and K+, Cl- and MG2+ ions will be added. This example will use the force field described by Wang et al, JACS, 2022 (DIO: 10.1021/jacs.2c04082)
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+- Download the template files of Wang et al (Force Field ID: AA_ions_Wang22.v1 at https://smog-server.org/smog2/template_repo/). You will have to unzip/untar, so that you have a template directory called AA_ions_Wang22.v1.  For these steps, it is assumed that AA_ions_Wang22.v1 is in your current working directory. 
+ 
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+ 
+Begin with the file 2ci2.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. smog_adjustPDB may be applied directly to the downloaded PDB file.
+Since this set of templates uses naming conventions that are not identical to the default SMOG models, we will need to specify a mapping file.  
+ 
+>smog_adjustPDB  \
+     -i 2ci2.pdb \
+     -map AA_ions_Wang22.v1/AA_ions_Wang22.v1.map \
+     -removewater \
+     -o 2ci2.adjusted.pdb
+     
+
+Generate your force field for the biomolecule with smog2:  
+- The -t flag indicates that the template directory SBM_AA+custom+ions should be used to define the force field.
+- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+- -center will place protein equidistant from each boundary
+- -boxbuffer will set the box size so that the protein is 10nm from each boundary
+ 
+>smog2 \
+     -i 2ci2.adjusted.pdb \
+     -t AA_ions_Wang22.v1 \
+     -OpenSMOG \
+     -dname 2ci2.OpenSMOG.AA+custom+ions \
+     -center \
+     -boxbuffer 10
+
+For this system, you should receive a message indicating that the total charge is +6.
+
+Now we need to add some ions.  The ion definitions are given in the template file AA_ions_Wang22.v1/AA_ions_Wang22.v1.ions.def.  The file gives the ion name, mass, charge, c12 and c6 parameters.
+
+To add some ions, we will use the smog_ions tool. Here, we are going to define the ions based on the *.ions.def file in the template directory. We would like to add 2 MG2+ ions
+
+
+>smog_ions \
+	-t AA_ions_Wang22.v1 \
+	-f 2ci2.OpenSMOG.AA+custom+ions.top \
+	-g 2ci2.OpenSMOG.AA+custom+ions.gro \
+	-OpenSMOG 2ci2.OpenSMOG.AA+custom+ions.xml \
+	-of 2ci2.OpenSMOG.AA+custom+ions.MG.top \
+	-og 2ci2.OpenSMOG.AA+custom+ions.MG.gro \
+	-OpenSMOGout 2ci2.OpenSMOG.AA+custom+ions.MG.xml \
+	-ionnm MG \
+	-ionn 2
+
+By adding 2 Mg2+, we bring the total charge to 10.
+
+We will now neutralize the system with 10 Cl- ions.
+
+>smog_ions \
+	-t AA_ions_Wang22.v1 \
+	-f 2ci2.OpenSMOG.AA+custom+ions.MG.top \
+	-g 2ci2.OpenSMOG.AA+custom+ions.MG.gro \	
+	-OpenSMOG 2ci2.OpenSMOG.AA+custom+ions.MG.xml \
+	-of 2ci2.OpenSMOG.AA+custom+ions.MGCL.top \
+	-og 2ci2.OpenSMOG.AA+custom+ions.MGCL.gro \
+	-OpenSMOGout 2ci2.OpenSMOG.AA+custom+ions.MGCL.xml  \
+	-ionnm CL \ 
+	-ionn 10
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.ci2.OpenSMOG.AA+custom+ions.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.ci2.OpenSMOG.AA+custom+ions.py

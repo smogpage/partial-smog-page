@@ -1,0 +1,23 @@
+
+# Notes on compiling MDfit in Gromacs Version 4.0.5: compiled with fftw v 3.2.2, openmpi 1.2.8, gcc, on Max OSX 10.6 with 64 bit Intel support
+# These commands assume that mpi is in your path.
+
+
+FFTW_SRC=/home/johndoe/src/fftw
+GMX_SRC=/home/johndoe/src/gmx
+
+FFTW_INSTALL=/home/johndoe/BIN/fftw_tmp
+GMX_INSTALL=/home/johndoe/BIN/gmx-cryoem
+export CFLAGS=-m64
+
+
+cd $FFTW_SRC
+./configure --enable-float --prefix=$FFTW_INSTALL
+make 
+make install
+
+cd $GMX_SRC
+./configure --enable-mpi --prefix=$GMX_INSTALL  --enable-apple-64bit
+make
+make install
+

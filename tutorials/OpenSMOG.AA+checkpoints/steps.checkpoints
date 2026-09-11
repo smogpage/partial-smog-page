@@ -1,0 +1,82 @@
+
+Here are instructions for using state files and checkpoints with OpenSMOG. They may also be found with the command SBM.help(), if OpenSMOG is imported.  It is assumed that you already used SMOG2 to generate the top, gro and xml file for OpenSMOG. In this example, the files are called 2ci2.X
+
+>from OpenSMOG import SBM
+
+Choose some basic runtime settings.  We will call our system 2ci2
+>SMOGrun = SBM(name='2ci2', time_step=0.002, collision_rate=1.0, r_cutoff=1.1, temperature=0.5)
+
+Note: By default, PBC is not turned on.  If you want to include PBCs, then use:
+>SMOGrun = SBM(name='2ci2', time_step=0.002, collision_rate=1.0, r_cutoff=1.1, temperature=0.5, pbc=True)
+
+Select a platform and GPU IDs (if needed)
+>SMOGrun.setup_openmm(platform='cuda',GPUindex='default')
+
+Decide where to save your data (here, output_2ci2)
+>SMOGrun.saveFolder('output_2ci2.part1')
+
+You may optionally set some input file names to variables
+>SMOG_grofile = '2ci2.gro'
+>SMOG_topfile = '2ci2.top'
+>SMOG_xmlfile = '2ci2.xml'
+
+Load your force field data
+>SMOGrun.loadSystem(Grofile=SMOG_grofile, Topfile=SMOG_topfile, Xmlfile=SMOG_xmlfile)
+
+
+Create the context, and prepare the simulation to run
+>SMOGrun.createSimulation()
+
+Perform energy minimization
+>SMOGrun.minimize(tolerance=1)
+
+Decide how frequently to save data
+>SMOGrun.createReporters(trajectory=True, energies=True, energy_components=True, interval=10**3)
+
+Launch the simulation
+>SMOGrun.run(nsteps=10**6, report=True, interval=10**3)
+
+Note: One can also run for clock time, rather than number of timesteps. For example, to run for 10 hours, you could use:
+>SMOGrun.runForClockTime(time=10)
+
+Optional additional considerations:
+It can be useful to save the state, or checkpoint at the end of your run,
+so that you may continue the run later. Here are some examples that build
+upon the above use case.
+
+To save the state file:
+>statefilename='smog.state'
+>SMOGrun.simulation.saveState(statefilename)
+
+To save the checkpoint file:
+>checkpointfilename='smog.checkpoint'
+>SMOGrun.simulation.saveCheckpoint(checkpointfilename)
+
+
+Now, to launching a continuation, you can start a new python session and follow these steps.
+
+>from OpenSMOG import SBM
+>SMOGrun2 = SBM(name='2ci2', time_step=0.002, collision_rate=1.0, r_cutoff=1.1, temperature=0.5)
+>SMOGrun2.setup_openmm(platform='cuda',GPUindex='default')
+>SMOGrun2.saveFolder('output_2ci2.part2')
+>SMOG_grofile = '2ci2.gro'
+>SMOG_topfile = '2ci2.top'
+>SMOG_xmlfile = '2ci2.xml'
+>SMOGrun2.loadSystem(Grofile=SMOG_grofile, Topfile=SMOG_topfile, Xmlfile=SMOG_xmlfile)
+>SMOGrun2.createSimulation()
+>SMOGrun2.createReporters(trajectory=True, energies=True, energy_components=True, interval=10**3)
+
+Load the previous state OR checkpoint file.
+
+How to load state file
+>statefilename='smog.state'
+>SMOGrun2.simulation.loadState(statefilename)
+
+How to load a checkpoint
+>checkpointfilename='smog.checkpoint'
+>SMOGrun2.simulation.loadCheckpoint(checkpointfilename)
+
+After loading either the state, or checkpoint, then run the simulation
+
+>SMOGrun2.run(nsteps=10**6, report=True, interval=10**3)
+

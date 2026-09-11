@@ -1,0 +1,108 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG forcefield, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt class="here"><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<center><h1>OpenSMOG with SMOG 2</h1>
+<h2>Simulating SMOG models in OpenMM</h2>
+<h3><a href="/smog2/#manuscript">Manuscripts</a> &nbsp <a href="/smog2/#manual">Manual</a> &nbsp <a href="/smog2/template_repo/">Force Field Repo</a> &nbsp <a href="/smog2/OpenSMOG/">OpenSMOG</a> </h3>
+</center>
+
+<font size="+0"><p>
+Beginning with SMOG v2.4, it is possible to create force fields that are written specifically for use with OpenMM. This is enabled through use of the <a href="https://opensmog.readthedocs.io/en/latest/">OpenSMOG</a> module, which is provided by the smog-server team. SMOG 2 and OpenSMOG have been co-designed for integrated use. In addition to allowing for utilization of OpenMM GPU-accelerated libraries, the OpenSMOG option of SMOG 2 allows one to design highly customized SMOG models. Essentially, any pair-wise potential energy function may be used for native contacts (v1.0 and later) and nonbonded parameters (v1.1 and later). Future releases are planned that will allow for additional customizations.
+
+<a name="check"></a><h2>Documentation and Download</h2>
+<p>
+For details on download, installation and usage of OpenSMOG, see the <a href="https://doi.org/10.1101/2021.08.15.456423">manuscript</a>, <a href="/smog2/#manual">SMOG 2 manual</a> or official <a href="https://opensmog.readthedocs.io/en/latest/">OpenSMOG documentation</a>.
+
+<p><b>OpenSMOG v1.3 is now available! For best performance, use with SMOG v2.6.</b>
+<p>OpenSMOG may be downloaded in the following ways:
+<ul>
+<li> <a href="https://opensmog.readthedocs.io/en/latest/GettingStarted/install.html#installing-opensmog">Conda</a>
+<li> <a href="https://opensmog.readthedocs.io/en/latest/GettingStarted/install.html#installing-opensmog">PIP</a>
+<li> <a href="https://hub.docker.com/r/smogserver/smogopensmog">Docker</a> - Also contains SMOG 2. 
+<li> <a href="https://github.com/smog-server/OpenSMOG">GitHub</a> 
+</ul>
+<a name="check"></a><h2>OpenSMOG-check (test suite)</h2>
+<p>
+It is strongly recommended that you verify your installations of OpenSMOG and SMOG2 are compatible. To ensure the two packages are working well together, we have prepared a short set of tests (OpenSMOG-check). If SMOG 2 is not in your path, then the script will simply check to make sure your configuration of OpenSMOG is reproducing some standard energies. In addition to running OpenSMOG-check, it is recommended that you also download and run smog-check, to ensure all aspects of SMOG2 are working properly. If you encounter any issues, please let us know. 
+<p>Note: Starting with v1.1.1, opensmogcheck has been integrated with the OpenSMOG distribution, so it is automatically available when OpenSMOG is installed.  
+<p>
+<table border="1" >
+  <col width="250">
+  <col width="180">
+  <col width="250">  
+  <tr>
+    <td><b>OpenSMOG-check version</b></td>
+    <td><b>SMOG 2 version</b></td>
+    <td><b>md5 (.tgz file)</b></td> 
+  </tr>
+  <tr>
+    <td><a href=/smog2/code/opensmog-check.v1.1.tgz>1.1</a></td>
+    <td>>=2.4.4</td>
+    <td>c3972ac77c5abaa5ae8fdb2725a95a71</td>
+  </tr>
+ 
+  <tr>
+    <td><a href=/smog2/code/opensmog-check.v1.0.4.tgz>1.0.4</a></td>
+    <td>2.4.1</td>
+    <td>d51bbfcae8211ebbdb766f306062726e</td>
+  </tr>
+</table>
+
+<p> OpenSMOG-check usage instructions can be found in the README file.
+
+
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

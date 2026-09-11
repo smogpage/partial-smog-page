@@ -1,0 +1,120 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG forcefield, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<center><h1>OpenSMOG history</h1></center>
+
+
+<h2>Updates</h2>
+<ul>
+<li><a name="notes1.3"></a><b>1.3</b> 
+<ul>
+<li> Added ability to generate exclusions from the xml file.
+<li> Added support for custom angles.
+<li> Added support for custom externals.
+</ul>
+
+
+<li><a name="notes1.2"></a><b>1.2</b> 
+<ul>
+<li> Added support for custom dihedral potentials
+<li> Bug fix related to the use of periodic boundary conditions. PBC were not being applied for native contacts.  Issue has been resolved.
+<li> Bug fix related to PBC with non-rectangular boxes. Off-diagonal componenents were previously ignored.
+<li> Bug fix when using multiple atom types in a molecule with multiplicity greater than 1 (as listed in top file under system). This issue could not occur with files directly generated with SMOG 2, but customized models could have been affected.
+<li> Changed default integrator to LangevinMiddle
+<li> Added wrapper to use new OpenMM 8.1 xtc writer (no need for MDtraj)
+<li> Added the LangevinMiddleTruncated integrator
+<li> Added checks for repeated names in OpenSMOG xml files
+<li> Updated default file names
+<li> Integrated support for minimization reporters (energy and coordinates)
+</ul>
+
+
+<li><a name="notes1.1.1"></a><b>1.1.1</b> 
+<ul>
+<li> Simplified handling of energy minimization steps
+<li> Introduced modifications to ensure compatibility with OpenMM 7.7.0
+<li> Introduced changes to reporters to ensure consistent units
+<li> Introduced changes to splash message
+<li> Improved accessibility of help option
+<li> Allow static cutoffs to be defined by SMOG 2 XML files
+<li> Added support for additional integrators
+<li> Added more error messaging to catch common user mistakes
+<li> Integrated OpenSMOG-check within OpenSMOG distribution
+</ul>
+
+
+<li><a name="notes1.1"></a><b>1.1</b> 
+<ul>
+<li> Support added for custom nonbonded parameters and potentials
+<li> Support added for use of global constants
+<li> Improved support for various trajectory file formats
+<li> Added wrapper for energy minimization
+</ul>
+
+<li><a name="notes1.0.4"></a><b>1.0.4</b> 
+<ul>
+<li> Minor compatibility issues resolved
+</ul>
+
+
+<li><a name="notes1.0"></a><b>1.0</b> 
+<ul>
+<li> Initial release. Support included for custom potentials for contact interactions.
+</ul>
+
+</ul>
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

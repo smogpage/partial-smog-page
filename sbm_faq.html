@@ -1,0 +1,135 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt class="here"><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<h1>Frequently asked questions</h1>
+<h3><center>  <a href=#general>General questions</a> &nbsp <a href=#webtool>Webtool questions</a> &nbsp <a href=#smog2>SMOG2 questions</a> 
+</center>
+</h3>
+<h2><a name="general"></a>General SMOG model questions</h2>
+<p>
+<b> When running grompp, why does Gromacs call RNA residues "DNA" and call DNA residues "other"?</b>
+<blockquote>
+This does not mean anything is wrong with the simulation. Our software uses pdb naming for our residues. i.e. RNA is called U, A, C and G and DNA is called DT, DC, DG and DA. But, Gromacs may expect DNA to use single-letter names. 
+</blockquote>
+<p>
+<a name="1012"></a>
+<b> Why does the CA model use a 10-12 Lennard-Jones potential?</b>
+<blockquote>
+The 6-12 potential is much wider and scales with contact distance. The longer contact distances possible in the CA model (up to about 12 Angstroms) allow for especially wide contacts, such that contacting atoms could feel an attraction even though a non-native CA bead is between them. Basically, unphysical unfolded states are more likely to be present when a 6-12 potential is used with the CA model.
+</blockquote>
+
+<b> I am using a CA model and I see unexplainable spikes in the energy. What is going on?</b>
+<blockquote>
+This is a CA-related issue. In the CA model, bond angles are defined by adjacent CA atoms and not directly by covalent bond angles. This means the angles can be rather large. In Gromacs (and other MD packages) there is a numerical instability when a bond angle is 180 degrees because the force associated with the dihedral term is undefined for such values. This issue appears mostly in Gromacs V3. This issue was reduced in Gromacs V4. It is rare that this happens, but if it does in your system, you can increase the strength of all bond angles. This will reduce the chances of reaching 180 degrees and the spikes should go away. If you do this, make sure your time step is not too large for the new strength of the angles.
+</blockquote>
+<b> What are reduced units?</b>
+<blockquote>
+The structure-based model is run with reduced units. That is, the scales must be self consistent. Here, the length
+scale, time scale, mass scale, and energy scale are all 1. The natural Gromacs
+units are length scale nm, time scale ps, mass scale amu, and energy scale
+kJ/mol. We convert the PDB (length scale angstroms) into nanometers but the mass
+scale, time scale, and energy scale are "free." You could, in theory, determine an
+overall energy scale and mass scale from the structure, and then
+infer a time scale, but this should be performed with care. This estimate of time does not necessarily account for the effects of solvent friction and possible non-specific energetic roughness. There is no standard method of computing "real" times from structure-based simulations, though the interested reader should check out <a href="http://pubs.acs.org/doi/abs/10.1021/jp053770b">Kouza et al</a> (for coarse-grained models) or <a href="https://aip.scitation.org/doi/full/10.1063/1.5113814">Yang et al</a> (for all-atom models). Essentially, be careful. You can at least be sure that the "real"
+time unit is longer than the picosecond time scales reported by Gromacs. Extensive discussions of reduced units can be found in many standard simulation texts, such as "Understanding Molecular Simulations," by Frenkel and Smit.
+<p>
+One must also take care with the temperature units in Gromacs. In Gromacs,
+k<sub>B</sub> = 0.00831451, and not 1. Thus, to have a reduced temperature of 1, you must use a Gromacs temperature of
+1/0.00831451 = 120.2717. Oftentimes, the folding temperature of these systems (i.e. the temperature in the .mdp file) is around 120. For a detailed discussion on the interpretation of reduced temepratures in SMOG models, and its relation to folding and physiological temperatures, check out <a href="http://www.mdpi.com/1422-0067/16/4/6868">Jackson et al</a>.
+</blockquote>
+
+<br>
+<h2><a name="webtool"></a>Webtool questions</h2>
+<p>
+<b> Why is the folding temperature not 107 for SH3 like it says in the <a href="https://academic.oup.com/nar/article/38/suppl_2/W657/1121903">webserver article</a>? </b>
+<blockquote>
+A <a href="/webtool_history.html#fromFAQ_1">change</a> in the Shadow algorithm altered the folding temperatures. The folding temperature is now 120. The barrier height of the Q PMF and the transition state are qualitatively unchanged from what is reported in the article.
+</blockquote>
+<p>
+<b> The webtool says I am missing bonds, angles, and dihedrals... should I be concerned? </b>
+<blockquote>
+This indicates that your structure (A) is missing atoms or (B) has non-standard atom names. Since the webtool expects certain atoms (with specific bonds, angles and dihedrals) to be present, if it doesn't see those atoms then it can't include the associated terms. If atoms are missing then the webtool will produce a file where those atoms, and all associated energetic terms, are excluded. The files provided will still run in Gromacs. If you believe you have a complete structure in the pdb file and you get these messages, check the output coordinate (.gro) file and see what atoms are missing. Make sure the atom name field is formatted correctly. The exact location of the atom name is important (i.e. " CD1" is not the same as "CD1 ").
+</blockquote>
+<p>
+<b> Why do the same messages appear twice in the output file?</b>
+<blockquote>
+This happens when you are using a shadow map. It happens because we have to process the pdb file twice when using the shadow map. The second set of messages should reflect the options you selected. The first set of messages are set to default values, and have no bearing on the final .gro and .top files.
+</blockquote>
+<p>
+<b> Why do the messages in the output file indicate options different from what I chose?</b>
+<blockquote>
+As indicated above, this occurs when using the shadow map option. The only settings that affect your simulations will be the second set of messages. The used settings will also be included in the tarball created by the webtool.
+</blockquote>
+
+ 
+<br>
+<h3><a name="SMOG2"></a>SMOG2 questions (additional questions addressed in SMOG2 manual)</h3>
+<b> Can I download the source code?</b>
+<blockquote>
+Yes. While the original SMOG software (version 1) that drives the page is not available, we have developed a far more flexible version of the code (<a href=/smog2>SMOG 2</a>) that can be downloaded.
+</blockquote>
+<p>
+<p>
+<b> I used smog_adjustPDB and when I run SMOG2 I get the error "FATAL ERROR:  It appears that a residue in the PDB file does not contain all of the atoms defined in the .bif file.".  What is wrong?</b>
+<blockquote>
+Sometimes, this error arises because there were missing atoms in the PDB file (e.g. some atoms may have not been resolved in the crystallographic model). If you are convinced that all atoms are present, then there is another possibility. When you use smog_adjustPDB, it makes its best guesses for how residues should be named, based on the atoms that were found (starting with v2.3) or the position of the residue in the chain (prior to v2.3).  For example, a 5'-terminal RNA residue (say G) will be renamed with a 5 added to the residue name (G5). In the default templates, G5 is defined as a residue that has a terminal phosphate group, however most PDB files are lacking these atoms.  The appropriate name for a phosphate-less terminal G would be G0P (zero, not O). If this is the case, you can provide your own mapping file for smog_adjustPDB, or you can manually edit the residue names in the pdb file. 
+</blockquote>
+<p>
+
+
+
+
+<p>
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

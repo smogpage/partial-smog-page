@@ -1,0 +1,40 @@
+# these commands assume that smog2 is in your path and the OpenSMOG
+# libraries are already installed for the default version of python
+
+
+###############  CI2 PROTEIN ##################
+
+# first, we need to clean up the PDB file, so that SMOG 2 can properly process it
+
+smog_adjustPDB -i 2ci2.pdb -o 2ci2.adjusted.pdb -removewater
+
+
+# now, we need to run SMOG 2 to generate a force field
+
+# for the c-alpha model, use
+
+smog2 -CA -i 2ci2.adjusted.pdb -OpenSMOG -dname 2ci2.CA
+
+# run the simulation with OpenSMOG - this is a low temperature run
+python run.CA.py
+
+
+# now, you can run it at a higher temperature, followed by a lower temperature
+
+python run.CA.high-low.py
+
+
+################## CI2 with the all-atom model #######
+
+# for the all-atom model, use
+smog2 -AA -i 2ci2.adjusted.pdb -OpenSMOG -dname 2ci2.AA
+
+# run the simulation with OpenSMOG
+python run.AA.py
+
+
+###############  SPIKE PROTEIN ##################
+smog2 -i prefusion_with_glycans.pdb -t AA_glycans_Dodero21.v1 -OpenSMOG -dname spike.OpenSMOG.AA+glycans
+
+python run.glycans.py
+

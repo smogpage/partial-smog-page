@@ -1,0 +1,93 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt class="here"><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<h1>Shadow Contact Map</h1>
+
+<p>A contact map is an important component of a structure-based model. It is a symmetric matrix that encodes the tertiary structure of the molecule by defining the interactions that stabilize the native state. A common method of choosing these interactions is to choose a cut-off distance and define all atoms within the cut-off distance in the native state as the stabilizing interactions. The cut-off distance needs to be long enough to include all relevant short range interactions, for proteins ~6&Aring should be sufficient. With a cut-off definition for contacts, in order to include the contacts between 5-6&Aring, several "unphysical" contacts will be introduced. The unphysical contacts being those that are acting through another atom. To avoid this situation we introduce the <em>Shadow contact map (SCM)</em>.</p>
+<img src="/SCM/shadow.jpg" style="display:block;margin-left: auto;margin-right:auto;margin-top:20px" />
+<p>The SCM algorithm is described in the above figure. It is a cut-off contact map with a screening term <em>S</em> introduced. All atoms are given a radius <em>S</em>. To determine the atoms contacting atom <em>i</em>, all atoms within a cutoff distance <em>C</em> of atom <em>i</em> are considered possible contacts. Those contacts which have an intervening atom are considered screened out and are discarded. The algorithm is simply stated: a light source is located at the center of atom <em>i</em>, any atoms within <em>C</em> which have no shadow cast upon them are considered contacts. One can change <em>S</em> to scale the amount of shadowing. <em>S</em>=1&Aring works well with proteins. The figure below highlights SCM in action. The upper figure shows an RNA double helix. With a cut-off of 4&Aring; the blue atom is in contact with the orange and green atoms. With a shadowing radius of 1&Aring;, only the green atoms are in contact with the blue. The lower figure shows the interior of chymotrypsin inhibitor 2 (<a href="http://www.rcsb.org/pdb/explore.do?structureId=2ci2">PDB code 2CI2</a>). The blue atoms are contacting with a 4&Aring; cut-off map, but with <em>S</em>&gt;0.5&Aring; the orange atom shadows and throws out the contact.
+<img src="/SCM/shadowGlossy.jpg" style="display:block;margin-left: auto;margin-right:auto;margin-top:20px" />
+<p>Details are described in the following reference:
+<p><blockquote>
+Noel JK, Whitford PC, Onuchic JN. (2012) "The shadow map: A general contact definition for capturing the dynamics of biomolecular folding and function" <em>J. Phys. Chem. B</em> <a href=http://pubs.acs.org/doi/abs/10.1021/jp300852d>DOI:10.1021/jp300852d</a></blockquote>
+<br>
+<h3>Shadow (SCM.jar) software</h3>
+SCM.jar is distributed as part of the SMOG 2 software bundle, available <a href=/smog2/>here</a>. See SMOG 2 user manual for usage details. 
+<br />
+HOW SCM WORKS:<br />
+<ul>
+<li>Determines which atoms are in contact using the following
+algorithm:</li>
+</ul>
+<ol>
+<li>Checks if two atoms are within cutoff (-c) angstroms.</li>
+<li>Checks if two atoms are greater than the specified number
+of residues apart or in separate chains.</li>
+<li>If so then checks to see if any atoms are between the
+two.&nbsp; This is
+determined by putting a light bulb at the center of each of the atoms
+and seeing if any of the other atoms cast a shadow on the potential
+contacting atom. &nbsp;If so then the contact is thrown out.</li>
+<ul>
+<li>The size of the atoms is determined by size (-s).</li>
+<li>A
+potentially shadowing atom is given a size of 0.5 angstrom when it is
+bonded to the shadowee.&nbsp; This is because the C-C bond length
+is 1.5
+angstrom and bonded neighbors should not shadow.<br />
+</li>
+</ul>
+</ol>
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</body>
+</html>

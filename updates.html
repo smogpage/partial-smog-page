@@ -1,0 +1,145 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt class="here"><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<h1>SMOG News</h1>
+<br>
+Here are some things that have been done with SMOG models. If you publish a paper with SMOG models, send <a href="mailto:info@smog-server.org">us</a> an email and we'll be happy to add it as an announcement.
+
+<p><b>April 7th, 2026</b> Wanes et al. extended SMOG models to describe inner and outer-shell ions. Application to the ribosome showed how ion-concentration changes can shift the free-energy landscape of a large-scale collective reorganization process! The study appears in <a href=https://www.pnas.org/doi/10.1073/pnas.2527693123>PNAS</a>.
+
+<p><b>August 15th, 2024</b> Grunst et al. used SMOG models to study the dynamics of the spike protein. Their study showed how an antibody can stop membrane fusion, which can prevent infection of a cell.  The study appears in <a href=https://www.science.org/doi/10.1126/science.adn5658>Science</a>.
+
+<p><b>May 20th, 2024</b> Singh et al. used SMOG models to study large-scale rearrangements in the mitoribosome. Their analysis appeared in <a href=https://www.nature.com/articles/s41467-024-48163-x>Nature Communications</a>.
+
+<p><b>December 12th, 2023</b> Today, the SMOG webtool has generated its 30,000th force field! Keep up the great work!
+
+<p><b>October 18th, 2022</b> Hassan and Whitford used SMOG 2 and SMOG models to identify novel single-molecule strategies for monitoring collective rearrangements in the ribosome during tRNA translocation. By comparing different single-molecule labeling sites, they showed how future experiments may be able to simultaneously measrure two large-scale motions in the ribosome. See the results in <a href='https://pubs.acs.org/doi/10.1021/acs.jpcb.2c05706'>J Phys Chem B</a>.
+<p><b>October 17th, 2022</b> Wang et al. used SMOG 2 and SMOG models to isolate the precise steric interactions that govern a large-scale conformational rearrangement in the ribosome. Using an perturbative approach, they found that a single residue can control tRNA motion on the ribosome. See the results in <a href='https://pubs.acs.org/doi/10.1021/acs.jpcb.2c05513'>J Phys Chem B</a>.
+<p><b>July 22th, 2022</b> Ahn et al. used SMOG 2 and SMOG models to study protein folding on the ribosome.  They showed how perturbations to the ribosome can impact folding properties.  See the results in <a href='https://www.nature.com/articles/s41467-022-31906-z'>Nature Communications</a>
+<p><b>May 20th, 2022</b> Wang et al. used SMOG 2 to develop SMOG-ion, a model that allows for SMOG models to be used with electrostatics and explicit ions.  To demonstrate the utility of this approach, free-energy barriers were calculated for the ribosome. This revealed a strong ion-concentration dependence of tRNA motion on the ribosome. The model may be used with OpenMM or Gromacs, and the templates are freely available through the <a href="/smog2/template_repo/">SMOG 2 force field repo</a>.  For a full description of the model, see the manuscript in <a href=https://pubs.acs.org/doi/10.1021/jacs.2c04082>JACS</a>.
+<p><b>April 14th, 2022</b> Paul Whitford gave a Protein Society webinar today that described SMOG 2 and OpenSMOG.  Check out the talk <a href=https://www.youtube.com/watch?v=OToOanzFR8U&t=4s>here</a>. 
+
+<a href="#OpenSMOG"></a><p><b>October 16th, 2021</b> The OpenSMOG manuscript appeared online today. As described in the manuscript, with SMOG 2.4 it is possible to use all-atom SMOG models to study a broad range of systems, including extremely large assemblies. Simulations were reported that described multi-million atom systems, such as crystallographic lattices of ribosomes, chromosomes and the HIV capsid with explicit electrostatics and ions.  In addition, the OpenSMOG module allows for the utilization of high-performance GPU accelerators.  See these example applications and performance statistics in the <a href=https://onlinelibrary.wiley.com/doi/abs/10.1002/pro.4209>manuscript</a>.
+
+<p><b>October 14th, 2021</b> Cassaignau et al. used SMOG 2 to study co-translational folding on the ribosome. In this study, the authors demonstrated how a delicate balance between folding energetics and binding can facilate nascent chain dynamics. The study appeared in <a href=https://www.nature.com/articles/s41557-021-00796-x>Nature Chemistry</a>.
+
+<a href="#spike"></a><p><b>August 31st, 2021</b> Dodero-Rojas et al. used all-atom structure based models and SMOG 2 to simulate the complete conformational rearrangement of the SARS-CoV-2 Spike protein. These provide the first mechanistic description of this large-scale (hundreds of Angstroms) rearrangement. The results appeared in <a href="https://elifesciences.org/articles/70362">eLife</a>. The study was selected for a press release by eLife, which can be found <a href="https://elifesciences.org/for-the-press/e68ab834/model-of-sars-cov-2-dynamics-reveals-opportunity-to-prevent-covid-19-transmission">here</a>. This was accompanied by a press release by <a href="https://news.rice.edu/news/2021/sim-shows-how-covid-virus-infects-cells">Rice University</a>. If you would like to download one of the simulated trajectories, you may find it <a href=https://drive.google.com/drive/folders/1bXCwpgpY1r6FWwz7dOSfhx1J23LMiNZk?usp=sharing>here</a>. 
+
+<p><b>May 24th, 2021</b> Freitas et al. used all-atom structure based models and SMOG 2 to simulate subunit rotation in a eukaryotic ribosome. These are the first simulations with an all-atom in which spontaneous subunit subunit rotation has been observed in a ribosome (for any organism) and they are the first simulations of a spontaneous large-scale rearrangement in a eukaryotic ribosome. The results appeared in <a href=https://www.mdpi.com/2673-4125/1/2/16>Biophysica</a>.
+<p><b>November 11th, 2020</b> Levi et al. used all-atom structure based models and SMOG 2 to study P/E hybrid formation on the ribosome. The results appeared in <a href=https://www.nature.com/articles/s41467-020-19450-0>Nature Communications</a>.
+
+<p><b>November 7th, 2020</b> Whitford, Jiang and Serwer used all-atom structure based models and SMOG 2 to simulate maturation of a complete viral capsid (1.1 million atoms). The results appeared in a special issue of  <a href=https://www.mdpi.com/1999-4915/12/11/1273/htm>Viruses</a> that was in memory of Michael Rossmann.
+
+<p><b>October 29th, 2020</b> Javitt et al. used the C-alpha structure-based model, and SMOG 2, to study assembly of mucin and von Willibrand factor polymers. The results appeared in <a href=https://www.sciencedirect.com/science/article/pii/S0092867420311624>Cell</a>.
+
+<p><b>August 4th, 2020</b> Roy et al. used the C-alpha structure-based model, and SMOG 2, to study the receptor binding domain in the SARS-CoV-2 spike protein.  These simulations show how the structure of the spike protein has evolved to allow for efficient receptor binding. The results appeared in <a href=https://pubs.acs.org/doi/abs/10.1021/acs.jpclett.0c01431>J Phys Chem Letters</a>.
+<p><b>July 27th, 2020</b> Suma et al. used the all-atom SMOG model to undestand how xrRNAs are able to exhibit asymmetric nanopore translocation properties. The study was published in <a href=https://www.nature.com/articles/s41467-020-17508-7>Nature Communications</a>.
+<p><b>February 2020</b> Bandarkar et al. used all-atom structure-based models to interpret the dynamics of tRNA in nanopore experiments.  The results appeared in <a href=https://www.cell.com/biophysj/fulltext/S0006-3495(20)30103-X>Biophysical Journal</a>.
+<p><b>August 2019</b> Yang et al. compared the diffusive properties of tRNA inside the ribosome when using all-atom structure-based models and all-atom explicit-solvent simulations. Through this, they showed how electrostatic and solvation effects can lead to position-dependent diffusion of tRNA during elongation. The article was selected as a 2019 Editor's Choice for <a href=https://aip.scitation.org/doi/full/10.1063/1.5113814>J Chem Phys</a>.
+
+<p><b>July 2019</b> Faelber et al. investigated the structure of the mitochondrial membrane remodeling protein Mgm1/Opa1. Structure-based models of the filament formed by Mgm1 were used to predict how the filament will adjust to varying membrane tube radii. The results appeared in <a href=https://www.nature.com/articles/s41586-019-1372-3>Nature</a>.
+
+
+<p><b>October 2018</b> Yang, Perrier and Whitford used C-alpha SMOG models to identify a disordered intermediate during large-scale conformational rearrangments in EF-Tu.  The results appeared on the cover of <a href=https://onlinelibrary.wiley.com/toc/10970134/2018/86/10>Proteins</a>.
+<p><b>September 18th, 2018</b> Gatsogiannis et al. used SMOG2 to generate SMOG models to study conformational changes in Tc toxin.  The results were published in <a href=https://www.nature.com/articles/s41586-018-0556-6/>Nature</a>.
+<p><b>August 2018</b> Liu et al. used structure-based models determine if distal domains within a crystal structure were geometrically able to dimerize. The results appeared in <a href=https://www.nature.com/articles/s41467-018-05523-8>Nature Communications</a>.
+<p><b>Dec 19th, 2017</b> Levi et al used SMOG 2 to develop a new coarse-grained model for ribonucleoprotein assemblies. Using their model they explored how observations in single-molecule experiments can be influenced by the choice of probe location.  The results appeared in <a href=http://www.cell.com/biophysj/fulltext/S0006-3495(17)31137-2>Biophysical Journal</a>.
+<p><b>Nov 30th, 2017</b> Yang, Noel and Whitford used all-atom SMOG models to explore the relationship between structural fluctuations in the ribosome and large-scale rearrangements of tRNA molecules.  The study appeared on the cover of <a href=http://pubs.acs.org/toc/jpcbfk/121/47>J Phys Chem B</a>. 
+<p><b>May 8th, 2017</b> Today, the SMOG webtool has generated its 20,000th force field!  Excellent work everybody!
+<p><b>May 4th, 2017</b> SMOG models were used to interpret measurements of proteins in nanopores. The results appeared in <a href=http://pubs.acs.org/doi/abs/10.1021/acsnano.7b01212>ACS Nano</a>.
+<p><b>March 9th, 2017</b> Nguyen, Yang and Whitford used SMOG models to show how differences in the tRNA variable loop can lead to species-specific dynamics during hybrid-state formation on the ribosome. The results appeared in <a href=http://pubs.acs.org/doi/abs/10.1021/acs.jpcb.7b01072>J Phys Chem B</a>.
+<p><b>Dec 2016</b> An updated version 1.07 of WHAM.jar is available on the <a href=/SB_analysis.html>tools</a> page. If you use this tool, make sure you use the updated version as it fixes an issue that often prolongs the convergence time for parallel runs.</p>
+<p><b>October 31st, 2016</b> Noel and Whitford used SMOG models to show how EF-Tu can reduce the free-energy barrier of tRNA accommodation on the ribosome.  The results appeared today in <a href=http://www.nature.com/articles/ncomms13314>Nature Communications</a>.
+<p><b>August 1st, 2016</b> Nguyen and Whitford used SMOG models to identify appropriate single-molecule labeling sites for measuring tRNA hybrid-state formation in the ribosome.  The manuscript appeared in <a href=http://pubs.acs.org/doi/abs/10.1021/acs.jpcb.6b04476>J. Phys. Chem. B</a>.
+<p><b>March 10th, 2016</b> Our paper describing SMOG 2 appeared today in <a href=http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004794>PLOS Computational Biology</a>.
+<p><b>February 3rd, 2016</b> Nguyen and Whitford used SMOG models to identify a new collective tilting motion in the ribosome.  The results appeared today in <a href=http://www.nature.com/articles/ncomms10586>Nature Communications</a>.
+<p><b>July 31st, 2015</b> Ramirez-Sarmiento et al uses SMOG to show how interdomain contacts control native state switching of RfaH on a dual-funneled landscape. The results were reported in  <a href=http://www.ploscompbiol.org/article/metrics/info:doi/10.1371/journal.pcbi.1004379>PLOS Comp Bio</a>.
+<p><b>July 20th, 2015</b> SMOG 2 is now available!  This is a downloadable version of the software, which has been designed to provide a robust platform for the flexible design of new SMOG models.  Check out the SMOG 2 page <a href=/smog2/>here</a>.
+<p><b>May 2015</b> A user forum for smog users is now available. This is for discussion/questions regarding structure-based models, as well as the SMOG and SMOG 2 software. To sign up, go to <a href=https://mailman.rice.edu/mailman/listinfo/smog-users>the forum page</a>.
+<p><b>December 2014</b> Noel et al use SMOG models to identify optimal coordinates for describing the large-scale accommodation process in the ribosome. The results were reported in <a href=http://www.sciencedirect.com/science/article/pii/S000634951401073X>Biophysical Journal</a>.
+<p><b>Aug 1st, 2014</b> Lin et al. use dual-basin SMOG models to present the first dynamical picture of the massive functional rearrangment of the influenza virus glycoprotein hemagglutinin. The results were reported in <a href=http://doi.org/10.1073/pnas.1412849111>PNAS</a>.
+<p><b>May 22nd-23rd, 2014</b> Many members of the SMOG team and others who use SMOG models presented work at the 1st Symposium on Current Topics in Molecular Biophysics at the University of S&atildeo Paulo, Brazil.</p>
+<p><b>July 19th, 2013</b> Beta version of the downloadable local version of the webtool is available. It is based on Perl5 and XML. While we believe you will already find it useful, it is still an experimental version and we appreciate feedback.
+<p><b>June 11th, 2013</b> 10,000th PDB converted to gro/top SBM. Keep up the great science!</p>
+<p><b>January 17th, 2013</b> Walther et al. use SMOG models to help identify the structure and self-assembly properties of the TatA translocation pore. The results were reported in <a href=http://www.cell.com/abstract/S0092-8674(12)01539-5>Cell</a>.
+<p><b>November 2012</b> Lammert et al. show that backbone distortions decide the folding mechanism of SH3 in the Calpha model. The article appeared in <a href="http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002776"><em>PLoS Comp Bio</em></a>
+<p><b>September 20th, 2012</b> Jamros et al. used SMOG models to characterize changes in the configurational distribution of Csk upon substrate binding. The results were published in <a href=http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002695><em>PLoS Comp. Biol.</em></a>.
+<p><b>July 13th, 2012</b> Sulkowska et al. uses SBMs to explore the landscape of a designed trefoil knotted protein. The manuscript appeared in <a href=http://www.pnas.org/content/109/44/17783.full><em>PNAS</em></a>.
+<p><b>May 8th, 2012</b> Sutto and Camilloni used SBMs to study the engineered proteins GA98 and GB98, which provided insights into how protein folding motifs may evolve. The manuscript appeared in <a href=http://jcp.aip.org/resource/1/jcpsa6/v136/i18/p185101_s1><em>J. Chem. Phys.</em></a>.
+<p><b>April 2012</b> Wang et al. studied large-scale conformational rearrangements in Maltose Binding Protein. They used SBMs to built a triple-basin model to identify the extent to which induced-fit and population-shift mechanisms are used. The manuscript appeared in <a href=http://www.ploscompbiol.org/article/info%3Adoi%2F10.1371%2Fjournal.pcbi.1002471><em>PLoS Computational Biology</em></a>.
+<p><b>April 26th, 2012</b> Noel et al. characterizes the shadow map and shows how it is a general contact map definition for capturing the dynamics of biomolecular folding and function. The manuscript appeared in <a href=http://pubs.acs.org/doi/abs/10.1021/jp300852d><em>J. Phys. Chem. B</em></a>.
+<p><b>April 12th, 2012</b> Noel et al. uses SBMs to more fully explore the competing folded conformations of three helix bundles found in explicit solvent REMD simulations. The manuscript appeared in <a href=http://pubs.acs.org/doi/abs/10.1021/jp212623d><em>J. Phys. Chem. B</em></a>.
+<p><b>March, 2012</b> Gaye et al. used SBMs to study the effects of mutations in the protein TOP7. The results were published in <a href=http://dx.doi.org/10.1209/0295-5075/97/68003><em>EPL</em></a>.
+<p><b>November 13th, 2011</b> Altman et al. used modified SBMs to characterize the properties of novel FRET dyes. The results were presented in <a href=http://www.nature.com/nmeth/journal/vaop/ncurrent/full/nmeth.1774.html><em>Nature Methods</em></a>.
+<p><b>November 12th, 2011</b> Lammert et al. used modified SBMs to investigate the detailed role of protein side-chain excluded volume during folding. The results were presented in <a href=http://onlinelibrary.wiley.com/doi/10.1002/prot.23187/abstract><em>Proteins: Structure, Function Bioinformatics</em></a>.
+<p><b>November 11th, 2011</b> Whitford et al. used SBMs as the foundation for building atomic models from cryo-EM data for the ribosome. The results were reported in <a href=http://www.pnas.org/content/early/2011/11/09/1108363108.abstract><em>PNAS</em></a>. The described atomic models can be found <a href=/PNAS_Whitford_2011/>here</a>.
+<p><b>October 13th, 2011</b> Aqeel et al. compared a variety of cryo-EM modeling techniques, including <a href=/extension/MDfit.html>MDfit</a>. The results were reported in <a href=http://www.sciencedirect.com/science/article/pii/S1047847711002863><em>J. Struct. Biol.</em></a>.
+<p><b>May 27th, 2011</b> Ferreira et al. used SBMs to interpret SAXS measurements, which demonstrated that PKD2 proteins likely form oligomeric assemblies in solution. The results were published in <a href=http://www.pnas.org/content/108/24/9833.long><em>PNAS</em></a>.
+<p><b>January 24th, 2011</b> Nechushtai et al. combined SBMs with x-ray crystallography, protein-film voltammetry and CD measurements to reveal hidden modes of long-range communication in a Ferredoxin protein domain. The results were published in <a href=http://www.pnas.org/content/early/2011/01/24/1019502108.abstract?sid=2bd2bd62-edc6-409c-b837-c4898642f4ce><em>PNAS</em></a>.
+<p><b>August 26th, 2010</b> Jamros et al. used the all-atom SBM to model the ensemble of configurations of Csk that best accounts for measured Small Angle X-ray Scattering data. The results appeared in the <em>Journal of Biological Chemistry</em>, and can be accessed <a href=http://www.jbc.org/content/285/46/36121.full?sid=359dd625-8e0d-4007-b592-075d0e2f27a0>here</a>.
+<p><b>August 11th, 2010</b> Noel et al. used the all-atom SBM to investigate the folding of complex topologies, namely a trefoil knotted protein. The paper can be accessed <a href="http://www.pnas.org/content/107/35/15403.full">here</a>.
+<p><b>December 29th, 2009</b> Using this webtool, Schug et al. utilized a structure-based force field to assist in modeling protein complexes. The results were published in <i>PNAS</i> and can be accessed <a href=http://www.pnas.org/content/106/52/22124.abstract?sid=a9d4bf70-1bbd-48f3-bfd4-d1ac796aaed2 >here</a>.
+<p><b>December 28th, 2009</b> With the use of this webtool and model, Camilloni and Sutto published results on the folding of Lymphotactin in <i>J. Chem. Phys.</i> Check it out <a href=http://scitation.aip.org/getabs/servlet/GetabsServlet?prog=normal&id=JCPSA6000131000024245105000001&idtype=cvips&gifs=Yes&ref=no>here</a>.
+<p><b>January 20th, 2009</b> Calpha model for proteins added to the webtool and tutorial.
+<p><b>November, 2008</b> "Shadow" contact analysis <a href="/SCM">webtool</a> for monomeric, and oligomeric, protein/RNA/DNA systems was released.
+<p><b>October, 2008</b> All-atom structure-based webtool for proteins, RNA and DNA is released.
+<p><b>September 2nd, 2008</b> Our initial all-atom paper on proteins is published online in <i><a href=https://onlinelibrary.wiley.com/doi/full/10.1002/prot.22253>Proteins: Structure, Function Bioinformatics</a></i>.
+
+
+<p>
+
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

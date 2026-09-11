@@ -1,0 +1,81 @@
+################ DESCRIPTION ###############
+
+Example for how to generate and run a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will add a screened coulomb potential (Debye-Huckel) between charges, and we will add a +1 charge to each N in LYS. We will also add some lines to the templates, so that they can be used with OpenSMOG. This approach will only work with OpenSMOG, and not Gromacs.
+
+THIS IS FOR EDUCATIONAL PURPOSES ONLY AND NOT FOR PRODUCTION CALCULATIONS. THIS EXAMPLE IS ONLY MEANT TO ILLUSTRATE THE APPROACH FOR BUILDING A FORCE FIELD.
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+
+
+############## PRE-SMOG2 STEPS #############
+
+Copy the default AA model templates from <SMOG 2 DIR>/share/templates/SBM_AA
+To avoid confusion, rename all files SBM_AA+DebyeHuckel
+In the .bif file, find the residue entry for LYS. 
+
+Under LYS, replace the following line:
+
+<atom bType="B_1" nbType="NB_1" pairType="C_1">NZ</atom>
+
+with
+
+<atom bType="B_1" nbType="NB_1" pairType="C_1" charge="1" >NZ</atom>
+
+
+In the .sif file, add the following under the <sif> parent element
+   <OpenSMOGsettings>
+     <constants>
+       <!-- Note: K_coul is 1/5 of the value in most software
+                  since SMOG models use reduced units. For discussion
+                  on units in this model, see SMOG-ion manuscript
+       -->
+       <constant name="K_coul" value="27.787097"/>
+       <!-- kappa is 1 over the debye length, units of 1/nm
+            The value of 0.9 is an only a demonstrative value.
+            You decide what is appropriate for your study. -->
+       <constant name="kappa" value="0.9"/>
+       <constant name="dielectric" value="80"/>
+       <!-- Define all atoms to be the same size. This is necessary
+                  since OpenSMOG nonbonded parameters overwrite
+                  anything that may have been found in the .top file--> 
+       <constant name="atomsigma" value="0.25"/>
+       <constant name="atomepsilon" value="0.1"/>
+     </constants>
+   </OpenSMOGsettings>
+
+  <CustomNonBonded 
+        OpenSMOGparameters=" " 
+        OpenSMOGcombrule=" none " 
+        OpenSMOGpotential="K_coul*q1*q2/dielectric*(exp(-r*kappa)/r-exp(-r_c*kappa)/r_c)+atomepsilon*atomsigma^12*(1/r^12-1/r_c^12)"
+  />
+
+Explainer: For convenience, we defined constants that could be used in our force field definition.  We then defined a generic D-H + 1/r^12 term (truncated) for all nonbonded interactions. This is not the only way one could go about introducing this potential, but it will work. It also places all parameters in a single location, as opposed to having to specify each at various stages of simulation preparation.
+
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+ 
+Begin with the file 2ci2.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. smog_adjustPDB may be applied directly to the downloaded PDB file.
+
+Since this example set of templates uses naming conventions that are consistent with the default SMOG model, we do not need to specify the mapping file.  The default mapping rules will be applied.
+ 
+>smog_adjustPDB -i 2ci2.pdb -o 2ci2.adjusted.pdb -removewater
+
+ Generate your force field with smog2:  
+- The -t flag indicates that the template directory SBM_AA+DebyeHuckel should be used to define the force field.
+- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 -i 2ci2.adjusted.pdb -t SBM_AA+DebyeHuckel -OpenSMOG -dname 2ci2.OpenSMOG.AA+DebyeHuckel
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.ci2.OpenSMOG.AA+DebyeHuckel.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.ci2.OpenSMOG.AA+DebyeHuckel.py
+

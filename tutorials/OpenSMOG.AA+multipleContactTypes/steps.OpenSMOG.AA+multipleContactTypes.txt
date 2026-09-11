@@ -1,0 +1,70 @@
+################ DESCRIPTION ###############
+
+Example for how to generate and run a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example we will assign two type of contact potentials.
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+############## PRE-SMOG2 STEPS #############
+
+Copy the default All-atom model template (<SMOG 2 DIR>/share/templates/SBM_AA). Call the copy SBM_AA-multipleContactTypes 
+ 
+In the .sif file, define two functional forms - here a tanh and 10-12 potential
+
+    <function name="r16_tanh" 
+        directive="OpenSMOG" 
+        OpenSMOGtype="contact" 
+        OpenSMOGpotential="weight*((sigma1/r)^16+0.5* (tanh(B*(r-sigma2))-1))"
+        OpenSMOGparameters="weight,B,sigma1,sigma2"
+        exclusions="1"
+    />
+    <function name="contacts10_12" 
+        directive="OpenSMOG" 
+        OpenSMOGtype="contact" 
+        OpenSMOGpotential="weight*(5*(sigma/r)^12-6*(sigma/r)^10)"
+        OpenSMOGparameters="weight,sigma"
+        exclusions="1"
+    />
+
+In the .nb file, specify which type of pairTypes should used each potential.
+
+  <contact func="r16_tanh(energynorm,10,?*0.9,?*1.1)" contactGroup="c">
+    <pairType>*</pairType>
+    <pairType>*</pairType>
+  </contact>
+  <contact func="contacts10_12(energynorm,?)" contactGroup="c">
+    <pairType>C_2</pairType>
+    <pairType>*</pairType>
+  </contact>
+
+This above definition indicates that any interactions with a pairType of C_2 should use the 10-12 potential, while all others use a tanh function.
+
+In the .bif file, change the pairType of all atoms in LEU to C_2 
+
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+
+Begin with the file 2hi7.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Rename the atoms using smog_adjustPDB
+
+>smog_adjustPDB -i 2ci2.pdb -removewater -o 2ci2.adjusted.pdb
+
+Generate your force field with smog2:  
+	- The -AA flag indicates that SBM_AA-multipleContactTypes templates should be used.
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 -i 2ci2.adjusted.pdb -t SBM_AA-multipleContactTypes -opensmog -dname 2ci2.multipleContactTypes
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.multipleTypes.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python python run.multipleTypes.py
+

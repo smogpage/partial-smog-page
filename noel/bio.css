@@ -1,0 +1,178 @@
+
+#midcontent
+{
+height: 212px;
+padding: 0px;
+margin:0px;
+}
+
+
+/* LEFT COLUMN */
+#left_column
+{
+width: 200px;
+float: right;
+margin-top: 7px;
+margin-right: 0px;
+margin-bottom: 5px;
+margin-left: 20px;
+padding-top: 10px;
+padding-right: 5px;
+padding-bottom: 15px;
+padding-left: 5px;
+}
+
+
+#left_column h1
+{
+color: #036;
+padding:0px 0px 4px 0px;
+margin:0px 0px 3px 0px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 8pt;
+}
+
+#left_column h1 a
+{
+text-decoration: none;
+font-size: 8pt;
+}
+
+#left_column h1 a:hover
+{
+text-decoration: none;
+color: #0033ff;
+}
+
+#left_column ul
+{
+padding: 0px 0px 0px 1.25em;
+margin: 0px 0px 5px 2px;
+list-style-type: square;
+list-style position: inside;
+color: #FFF;
+list-style-image:url(../images/arrow_yellow.gif); 
+}
+
+#left_column li 
+{
+text-decoration: none;
+padding:0px 0px 5px 0px;
+color: #000;
+} 
+
+#left_column li a
+{
+text-decoration: none;
+padding:0px 0px 1px 0px;
+color: #03f;
+
+} 
+
+#left_column li a:hover
+{
+border-bottom:1px dotted;
+padding:0px;
+color: #03f;
+}
+
+#left_column img
+{
+padding:0px 0px 0px 0px;
+float:left;
+}
+
+
+/* MID COLUMN */
+#mid_column
+{
+background: white;
+margin-top: 7px;
+margin-right: 0px;
+margin-bottom: 5px;
+margin-left: 0px;
+padding-top: 10px;
+padding-right: 5px;
+padding-bottom: 15px;
+padding-left: 15px;
+}
+
+
+#mid_column h1
+{
+color: #036;
+padding:0px 0px 0px 0px;
+margin:0px 0px 8px 0px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 8pt;
+}
+#mid_column h2
+{
+color: #6699CC;
+padding:0px 0px 0px 0px;
+margin:0px 0px 8px 0px;
+font-family: Verdana, Arial, Helvetica, sans-serif;
+font-size: 1em;
+}
+
+#mid_column h1 a
+{
+text-decoration: none;
+font-size: 8pt;
+}
+
+
+#mid_column h1 a:hover
+{
+text-decoration: none;
+color: #0033ff;
+}
+
+#mid_column h2
+{
+color: #003366;
+}
+
+#mid_column ul
+{
+padding: 0px 0px 0px 20px;
+margin: 0px 0px 5px 0px;
+list-style-type: square;
+list-style position: inside;
+color: #FFF;
+}
+
+#mid_column li 
+{
+text-decoration: none;
+padding:0px 0px 5px 0px;
+color: #000;
+} 
+
+#mid_column li a
+{
+text-decoration: none;
+padding:0px 0px 1px 0px;
+
+} 
+
+#mid_column li a:hover
+{
+border-bottom:1px dotted;
+padding:0px;
+}
+
+#mid_column img
+{
+/*padding:0px 8px 8px 0px;
+float:left;*/
+}
+
+	
+.sub {
+    vertical-align: baseline;
+    font-size: 0.9em;
+	position: relative;
+	bottom: -0.3em; 
+    }
+	

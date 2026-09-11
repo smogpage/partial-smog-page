@@ -1,0 +1,166 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt class="here"><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<h1>Sample MDP file for Calpha Structure-based simulations in Gromacs v5</h1>
+<br>
+;Run control: Use Langevin dynamics.
+<br>
+integrator = sd
+<br>
+;time step in reduced units. 
+<br>
+dt = 0.0005
+<br>
+;number of integration steps
+<br>
+nsteps = 100000
+<br>
+;frequency to write coordinates to output trajectory .trr file
+<br>
+nstxout = 100000
+<br>
+;frequency to write velocities to output trajectory .trr file
+<br>
+nstvout = 100000
+<br>
+;frequency to write energies to log file
+<br>
+nstlog = 1000
+<br>
+;frequency to write energies to energy file
+<br>
+nstenergy = 1000
+<br>
+;frequency to write coordinates to .xtc trajectory
+<br>
+nstxtcout = 1000
+<br>
+;group(s) to write to .xtc trajectory.
+<br>
+;NOTE: group name "system" is defined if you are NOT using an index file. If you use an index file, all group references need to be consistent with the names given in the index file. Our webpage, by default, names the chains "1", "2", ... You can change these names to whatever you like, just make sure the mdp file uses the same naming scheme. For more information on group usage, please consult the Gromacs manual.
+<br>
+xtc_grps = system
+<br>
+;group(s) to write to energy file
+<br>
+energygrps = system
+<br>
+;Frequency to update the neighbor list (and the long-range forces,
+<br>
+;when using twin-range cut-off's).
+<br>
+nstlist = 20
+<br>
+;Make a grid in the box and only check atoms in neighboring grid cells
+<br>
+;when constructing a new neighbor list every nstlist steps.
+<br>
+ns_type = grid
+<br>
+;cut-off distance for the short-range neighbor list (NOTE: cut-offs should be longer if running a CA model than an AA model). 3.0 nm is about 2.5 times the typical longest interaction in a CA model. Using a cutoff of 2.0 nm is completely reasonable as a 12A contact will have only ~1% of its potential energy at that distance. We leave 3.0 nm here for safety, but if you know what you are doing feel free to decrease to 2.0 nm. If you have longer contacts, then of course increase these numbers.
+<br>
+rlist = 3.0
+<br>
+;treatment of electrostatic interactions
+<br>
+rcoulomb = 3.0
+<br>
+;treatment of van der waals interactions
+<br>
+rvdw = 3.0
+<br>
+;this tells gromacs to use the tables that we give it, instead of the standard interaction types
+<br>
+coulombtype = User
+<br>
+vdwtype = User
+<br>
+; Periodic boundary conditions in all the directions
+<br>
+pbc = xyz
+<br>;tables are not currently supported with verlet lists, meaning that calpha cannot scale
+<br>;well with gromacs5. Usually this is not a problem since you only want to use
+<br>;a single processor for small proteins. Note that -pd is not available in gromacs5
+<br>;but instead openmp is used, but this is not available for cutoff-scheme group.
+<br>;Basically, you should use gromacs4.6 for calpha, until tables are supported in 5 (in progress)
+<br>cutoff-scheme = group
+<br>table-extension = 20 ; (nm) !IMPORTANT! Set this so that rvdw + table-extension equals half of the box's longest diagonal.
+<br>
+;Temperature coupling
+<br>
+tc-grps = system
+<br>
+tau_t = 1.0 ; Temperature coupling time constant. Smaller values = stronger coupling.
+<br>
+ref_t = 50.0 ; In reduced units (see Gromacs Manual for explanation. We find many proteins fold around T=100-120)
+<br>
+;Pressure coupling
+<br>
+Pcoupl = no
+<br>
+;Velocity generation
+<br>
+gen_vel = yes
+<br>
+gen_temp = 50.0
+<br>
+gen_seed = 30
+<br>
+ld_seed = 130
+<br>
+comm_mode = angular ; center of mass velocity removal. Make sure you select what is proper for your simulation.
+<br>
+;NOTE on comm_mode: When using periodic boundary conditions, which improves the speed of neighbor searching, removing the angular velocity will lead to a warning at the grompp stage of simulations. So long as the box size is properly sized, such that your system does not cross the boundaries, then this warning is harmless and you can simply issue -maxwarn X, where X is the number of allowed warning messages.
+
+
+</div>
+</div>
+</body>
+</html>

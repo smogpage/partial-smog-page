@@ -1,0 +1,81 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<center><h1>SCM history</h1>
+</center>
+
+<h2>Updates</h2>
+<ul>
+<li><b>1.32</b>: Added option <code>-bif &#60;bif_file&#62; </code> which will read a SMOG 2 .bif and pick out residues with <code>type=amino</code> and call them protein for the purposes of <code>-pd</code>. All other residues are treated as type LIGAND and therefore have no residue delta between contacts. Also added various code for SMOG2 compatibility.
+<li><b>1.31</b>: Bug fix regarding the use of BMG and Shadow. Shadow treated a BMG type 6 bond (used to constrain the ion) as a chemical bond, thus discarding native BMG contacts at an intermediate stage of generating the SBM Hamiltonian. Shadow now disregards type 6 bonds and BMG contacts are now correct. Also now compiled with Java7.
+<li><b>1.27</b>: Included atom types " NG " and " CH3", and protein residue types DBZ and ACE. ACE is an acetyl group, and only makes sense as a stand-alone residue at the terminals.
+<li><b>1.26</b>: Added an error if a residue is missing a Calpha atom and option "--coarse CA" is requested. Also included atom type " ZN ".
+<li><b>1.25</b>: Added option <code>-og,--outputGauss</code> which specifies a filename to dump [ pairs ] formatted for Gaussian type contacts available in the SBM extension for Gromacs.
+<li><b>1.24</b>: Added support for <code>SPLICE</code> separator (like <code>TER</code>). Treats the spliced residues as a different chain, i.e. the deltas are not enforced. As before, no contacts if connected by bonds or dihedrals. Also fixed a bug that used shadowing size 1 even if you set "<code>-m shadow -s 0</code>". It now acts sanely and uses shadowing size 0 with that switch.
+<li><b>1.23</b>: Added explicit left justification to the 3rd PDB column output as Windows and Unix/MacOS default differently.
+<li><b>1.22</b>: --distance works correctly for AACA and CA graining as well.
+<li><b>1.21</b>: Added more output information to standard out dump, such as the total excluded volume.
+<li><b>1.20</b>: Added feature to reindex the contacts to start each chain at atom 1, residue 1. This is useful for systems that have more than 99999 atoms or 99999 residues since the PDB format cannot handle more than this. Enable with "--reindex." Also removed the unnecessary reading of dihedrals from the topology resulting in a speed increase and reduced memory footprint.</li>
+<li><b>1.12</b>: Shadow gives a shadowing radius of 0.5A to all atoms connected by bonds. Changed the definition of bonds to mean only those atoms specified under "[ bonds ]" and not the connections under "[ dihedrals ]." </li>
+<li><b>1.11</b>: Fixed bug that caused the Z component to lose one digit of precision. </li>
+<li><b>1.1</b>: Added option "--multiple [integer]" to read in several .gro at once.</li>
+<li><b>1.0</b>: Original Release</li>
+</ul>
+
+<h3>Known Bugs</h3>
+<ul>
+<li>None known, dare you to find one...
+</ul>
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</body>
+</html>

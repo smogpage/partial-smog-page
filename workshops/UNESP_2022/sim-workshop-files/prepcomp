@@ -1,0 +1,3 @@
+# this is just to fix an error in the VM
+export PATH=$PATH:/home/student/BIN/smog2.4.5-pre1/bin
+

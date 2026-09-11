@@ -1,0 +1,57 @@
+################ DESCRIPTION ###############
+
+Example for generating and running a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will build a SMOG model for a complete ribosome. We will then extract part 
+of the system, so that we can simulate a fragment.
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+ 
+Begin with the file 7k00.modified.pdb. This corresponds to a ribosome structure with RCSB ID 7k00, though we have made some simplications, for demonstrative purposes.  First, some modified residues and ligands were removed.  Other modified residues were altered (atoms deleted), such that the residues reflect their unmodified forms. While one could also introduce all of these modified residues into the templates, the focus of this example is to show how to extract a portion of a larger system. 
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. Accordingly, smog_adjustPDB may be applied directly to the downloaded PDB file.
+
+>smog_adjustPDB -i 7k00.modified.pdb -insertTER -removewater -o  7k00.adjusted.pdb
+
+For this example, when prompted about whether to include TER lines, indicate "all". NOTE: You are going to see a ton of messages printed to the screen.  This is typical with ribosomes, since they are very large and tend to have many things that need adjusting.
+
+Generate your force field with smog2:  
+	- The -AA flag indicates that the default (Whitford 2009) SMOG model should be used
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 \
+	-i 7k00.adjusted.pdb \
+	-AA \
+	-opensmog \
+	-dname 7k00.OpenSMOG.AA
+
+
+Now, we are going to extract a subset of atoms.  For this example, we want to make a simulation that is composed of atoms 10001 to 20000.  For this, we created an index file that has these atoms listed (keep.ndx).
+
+Use the smog_extract tool to make a new model that only contains the specified fragment.
+
+>smog_extract \
+	-f 7k00.OpenSMOG.AA.top \
+	-g 7k00.OpenSMOG.AA.gro \
+	-n keep.ndx \
+	-of ribosome.fragment.top \
+	-og ribosome.fragment.gro \
+	-OpenSMOG 7k00.OpenSMOG.AA.xml \
+	-OpenSMOGout ribosome.fragment.xml
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+If you want to simulate the full ribosome, use the command:
+>python run.7k00.py
+
+If you want to simulate the fragment, use:
+
+>python run.fragment.py
+

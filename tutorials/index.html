@@ -1,0 +1,142 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt class="here"><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt class="here"><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/tutorials">Tutorials</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<div id="title"><h1>SMOG Tutorials and Examples</h1></div>
+<h2>Avenues for using SMOG models</h2>
+The smog-server resource provides many ways to design and deploy SMOG models.  While the first SMOG models were only supported by Gromacs, there is now support provided by NAMD, LAMPPS and OpenMM. In addition, one may generate the models using the smog-server webtool, or the SMOG 2 software package. To help you decide which option is best for your work, we are working to provide step-by-step tutorials that highlight the capabilities of each strategy. Below we list a range of ways in which the resource may be used. Links are provided for worked-out examples, as well as some external resources. 
+
+<br><br>As you get started, you may also find the following introductory material to be helpful:
+<blockquote>
+<a href="https://link.springer.com/protocol/10.1007%2F978-1-4939-9608-7_6">Using SMOG 2 to simulate complex biomolecular assemblies</a>
+<br><a href="https://aapt.scitation.org/doi/10.1119/5.0075952">Quantifying biomolecular diffusion using a "spherical cow" model</a>
+</blockquote>
+
+<h2>The most basic models</h2>
+If you are only interested in using a standard SMOG model (i.e. Clementi C-alpha model, or Whitford All-atom model), then there are several approaches you may employ. Depending on the strategy you choose, you may utilize CPU-based, or GPU-based hardware. 
+
+<p>The C-alpha model:
+<ul>
+<li> Use SMOG-server webtool and Gromacs (CPU) -  see smog-server <a href=/performing_a_simulation.gromacs.html>intro</a>
+<li> Use SMOG 2 and Gromacs (CPU) - see <a href=/smog2/>SMOG 2 manual</a>
+<li> <a href=OpenSMOG.CA/>Use SMOG 2 and OpenMM/OpenSMOG (CPU or GPU)</a>
+</ul>
+
+
+<p>The All-atom model:
+<ul>
+<li> Use SMOG-server webtool and Gromacs (CPU) - see smog-server <a href=/performing_a_simulation.gromacs.html>intro</a>
+<li> Use SMOG-server webtool and NAMD (CPU) - see <a href=http://www.ks.uiuc.edu/Research/namd/2.10b1/ug/node72.html>NAMD</a> documentation
+<li> Use SMOG-server webtool and OpenMM (CPU or GPU) - see intro from <a href=http://membrane.urmc.rochester.edu/wordpress/?page_id=98>Grossfield lab</a>
+<li> Use SMOG 2 and Gromacs (CPU) - see <a href=/smog2/>SMOG 2 manual</a>
+<li> Use SMOG 2 and NAMD (CPU) - see <a href=http://www.ks.uiuc.edu/Research/namd/2.10b1/ug/node72.html>NAMD</a> documentation
+
+<li> <a href=OpenSMOG.AA/>Use SMOG 2 and OpenMM/OpenSMOG (CPU or GPU)</a>
+</ul>
+
+<h2>More elaborate and detailed applications of SMOG models (SMOG 2, only)</h2>
+While the webtool is useful for the standard SMOG models, anything more interesting requires the use of SMOG 2. SMOG 2 allows for a high level of model customization and extension. If you want maximal versatility, then you should use SMOG 2 with the OpenSMOG libraries for OpenMM. However, there is still a wide range of capabilities when using Gromacs, NAMD and LAMMPS. Since other groups have introduced SMOG-model support in NAMD and LAMMPS, below we only list examples of usage with OpenMM/OpenSMOG and Gromacs. There are more tutorials elsewhere on this site for Gromacs 5. Gromacs 2020 examples are provided with SMOG 2, and we are working to provide updated usage examples for more recent versions of Gromacs. If you find any aspects of these tutorials don't work "out of the box," then let us know. 
+
+<h3>OpenMM/OpenSMOG usage examples</h3><b>These examples assume you are using SMOG v2.4.5 and OpenSMOG v1.1.1, or later</b>. 
+<ul>
+
+<li> <a href=OpenSMOG.AA/>Standard all-atom model</a>
+<li> <a href=OpenSMOG.AA+coulomb/>All-atom model with Coulomb electrostatics</a>
+<li> <a href=OpenSMOG.AA+DebyeHuckel/>All-atom model with Debye-Huckel electrostatics and homogeneous nonbonded paramters</a>
+<li> <a href=OpenSMOG.AA+coulomb+ions/>All-atom model with explicit ions and Coulomb electrostatics</a>
+<li> <a href=OpenSMOG.AA+custom+ions/>All-atom model with explicit ions and custom effective potentials</a>
+<li> <a href=OpenSMOG.AA+newResidue>All-atom model with non-canonical/modified residues</a>
+<li> <a href=OpenSMOG.AA+novelLigand>All-atom model with a novel ligand</a>
+<li> <a href=OpenSMOG.AA+glycans>All-atom model with glycans (SARS-CoV-2 spike protein)</a>
+<li> <a href=OpenSMOG.AA+multipleContactTypes>All-atom model with multiple types of native contacts</a>
+<li> <a href=OpenSMOG.AA+disulfide>All-atom model with a disulfide bond</a>
+<li> <a href=OpenSMOG.AA+customContacts>All-atom model with a custom contact potential</a> (e.g. tanh(r))
+<li> <a href=OpenSMOG.AA+customNonbonded>All-atom model with a custom non-bonded potential with heterogeneous parameters</a> (e.g. exponentials)
+<li> <a href=OpenSMOG.CA/>Standard C-alpha model</a>
+<li> <a href=OpenSMOG.CA+disulfide>C-alpha model with a disulfide bond</a>
+<li> <a href=OpenSMOG.CA+customNonbonded>C-alpha model with custom non-bonded interactions</a>
+<!-- <li> <a href=OpenSMOG.AA+rescale>All-atom model with post-processed contact and dihedral weights</a> not yet supported-->
+<li> <a href=OpenSMOG.AA+largeFragment>Fragment of a large system (the ribosome) using the all-atom model</a>
+<li> <a href=OpenSMOG.AA+checkpoints >Performing simulations with many segments via checkpoint files</a>
+<li> <a href=OpenSMOG+GradientDescent>Steepest descent minimization</a>
+</ul>
+
+<h3> Gromacs usage capabilities</h3>
+<ul>
+
+<li> All-atom model with Coulomb electrostatics
+<li> All-atom model with Debye-Huckel electrostatics
+<li> All-atom model with explicit ions and Coulomb electrostatics
+<li> All-atom model with explicit ions and custom effective potentials (requires unofficial version of Gromacs)
+<li> All-atom model with non-canonical/modified residues
+<li> All-atom model with glycans
+<li> All-atom model with a disulfide bond
+<li> All-atom model with very long (e.g. millions of atoms) chains
+<li> All-atom model with large dimensions (1000 nm and larger)
+<li> C-alpha model with a disulfide bond
+<li> All-atom model with post-processed contact and dihedral weights
+<li> Fragment of a large system with the all-atom model 
+<li> Performing simulations with many segments via checkpoint files
+<li> steepest descent energy minimization example
+<li> conjugate gradient energy minimization
+</ul>
+
+
+
+<p>
+This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+</div>
+</div>
+
+</body>
+
+</html>

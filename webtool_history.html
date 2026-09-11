@@ -1,0 +1,190 @@
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<h1>Webtool history</h1>
+
+
+Since <a href=/smog2>SMOG2</a> is now available, the web version of SMOG is no longer under development. We will fix bugs, if they are found. If we update the force field generation code, it will be documented here. Resolved technical issues are described at the bottom of this page.
+<h2>Updates</h2>
+<ul>
+<li><a name="notes1.2.3"></a><b>1.2.3</b>
+<ul>
+<li>The back-end code has been cleaned up.
+</ul>
+<li><a name="notes1.2.2"></a><b>1.2.2</b>
+<ul>
+<li> The CBS sugar residue is supported.
+<li> Bug fix regarding the use of BMG and Shadow. Shadow treated a BMG type 6 bond (used to constrain the ion) as a chemical bond, thus discarding native BMG contacts at an intermediate stage of generating the SBM Hamiltonian. Shadow now ignores type 6 bonds and BMG contacts are now correct.
+<li> SMOG models have now been integrated within the OPTIM computational framework for Discrete Path Sampling (DPS), as developed by the Wales group. The model is identical as that used for simulations, except for a switching function used in the calculation of non-native interactions. We are organizing documentation and tutorials for the use of DPS with SMOG models.
+<li> All-atom model only: You now have the option to use longer timesteps. In the past, a timestep of 0.0005 was suggested to ensure minimal numerical noise. We have found that is the strength of all bonds is reduced by a factor of 2, and bond angles are increased in strength by a factor of 2, then you can use a timestep of 0.002 without altering the results.
+<li> A bug was fixed with regards to dihedrals in the CA model. While the page lets you select an arbitrary strength of the dihedrals, a value of 1 was being used. Functionality is now restored.
+</ul>
+
+
+<li><a name="notes1.2.1"></a><b>1.2.1</b>
+<ul>
+<li>1 bug fix regarding the addition of charges
+</ul>
+
+
+<li><a name="notes1.2"></a><b>1.2</b>
+<ul>
+<li>It is now possible to include some charges in your system (Only supported with the all-atom models). If you opt for charges, the only charges that will be included are on the following residue:atom pairs : ARG:NH1=+1, LYS:NZ=+1, BMG=+2, GLU:OE1=-1, ASP:OD1=-1, N-terminal N atoms=+1, OXT atoms=-1 and backbone P (RNA/DNA) atoms will be given -1. Be very careful with this option. There are a few subtle points (i.e. constants built into Gromacs) that you should be familiar with before using this option. In other words, the energy scale is not calibrated by default. Rather, the charges are placed on the molecule, and the scale of the energetic terms may need to be modified by the user through altering the value of the dielectric constant used in the simulation.
+<li> Additional ligands are supported. A complete list of supported ligands is: SAM,AP5,ADP,ATP,AMP,GTP,GDP,GNP,FUA,B12
+<li> N-terminal Acetyl groups (ACE) are now supported.
+<li> 3-(BENZOYLAMINO)-L-ALANINE is now supported (DBZ).
+</ul>
+
+
+<li><a name="notes1.1.1"></a><b>1.1.1</b>
+<ul>
+<li>Energy assignments are now calculated using double precision and the parameters in the top file are output with higher precision. In earlier versions, for molecular systems of 100,000+ atoms, there were small errors that could accumulate and lead to changes in energy assignments of ~1%. Now, double precision eliminates these rounding errors. For example, in a system with 154690 atoms, the total stabilizing energy is 154690.000018. All indicated energy ratios are also within 0.1 % of the requested value.
+</ul>
+
+<li><a name="notes1.1"></a><b>1.1</b>
+<ul>
+<li> <b>Change in energy distribution</b> NOW, by default, all (NA and protein) backbone dihedrals are the same strength and all ligand dihedrals are the same strength. Also, you can now specify the relative strength of each set of backbone dihedrals.
+<li> You can opt to not shift the coordinates. In Gromacs v4.5.X, you can use grid neighbor searching without using periodic boundary conditions, in which case it is not necessary to place the system in a box.
+<li> Due to a rounding issue (pdb precision 0.001 &Aring , and Gromacs files 0.01 &Aring precision), in previous versions it was possible to obtain a different Shadow contact map (~1% of the contacts are different) if you use a different spacing, or you shift coordinates. Now, the map is calculated for an unshifted system, and it uses 0.01 precision, with values taken from the submitted pdb file. If you were to provide the same structure twice, where the coordinates are shifted in one of them, then it is still possible to get a different contact map. For the same pdb file, the Shadow map generated with GenTopGro (V > 1.0.6) is now identical to that generated with Shadow.pl.
+<li> Shadow now supports BMG atoms.
+<li> ZN atoms are now supported. They interact through harmonic interactions, as is done for BMG atoms.
+<li> In all versions of this tool, the default mass of all atoms is 1.0. Since mass does not influence thermodynamic properties, this is often not a concern. If you perform kinetic simulations that do not sample a known thermodynamic ensemble, then the masses can affect the kinetic properties. Now, the webtool allows you to select for heterogeneous masses. C, O, N atoms are given a mass of 1.0, BMG is 2.0, P is 2.5 and ZN is 5.45. It is straightforward to further modify the masses by editing the .top file.
+<li> A minor bug resulted in contacts with the S atom of the MIA residue not being included in the rescaling of stacking contacts, when using a cut-off contact map. Bug fixed.
+<li> You can now upload your pdb file in gzipped or b2zipped format.
+<li> When using the shadow option, the webtool will reformat and renumber the pdb file. Now, upon successful generation of a force field, you will be given the modified pdb (NAME.pdb) and the submitted pdb (NAME.pdb.orig). Also, when using the Shadow option, the log file will have 2 sets of messages. The first round of messages corresponds to the processing of NAME.pdb.orig and the second round is for NAME.pdb.
+<li> The SPLICE option is now supported with the Shadow Contact Map.
+<!--<li> You can select to include some charges in your system (Only supported for All-atom models). If you opt for charges, the only charges that will be included are: ARG:NH1=+1, LYS:NZ=+1, BMG=+2, GLU:OE1=-1, ASP:OD1=-1, N-terminal N atoms=+1, OXT atoms=-1 and backbone P (RNA/DNA) atoms will be given -1. Be very careful with this option. There are a few subtle points (i.e. constants built into Gromacs) that you should be familiar with before using this option. A more complete description will be provided later. CAUTION: Since this is an experimental feature, the assignment of charges may change in the BETA version. Once V 1.1 is released, the assignment of charges will remain static.
+-->
+<li> <a href=/extension/gauss.html>Gaussian</a> contact potentials are now supported. The webtool will generate topology files with Gaussian contacts, if selected. These topology files must be run with our modified version of Gromacs, which is available <a href=extension/gauss.html>here</a>.
+<li> It is now possible to select a <a href=/SCM>Shadow Contact Map</a> (SCM) with specific parameters (i.e. sequence separation, distance criterion and shadow size).
+<li> The definition of sequence separation, for the calculations of contact maps, has changed from earlier versions of the webtool. NOW, for two residues i and j, they must be separated by |i-j|>sequence separation value. Before, it was |i-j|>=sequence separation value. That is, 3, in version >=1.1, is equivalent to 4 in versions <1.1.
+</ul>
+
+
+
+
+<li><b>1.0.6</b>
+<ul>
+<li>The modified NA residue 2-methylthio-N6 isopentenyl adenosine is now supported (resname MIA). 
+<li>GTP is supported. 
+<li> You may also splice an RNA chain (to the O3' atom) and protein chain (C-terminal atom, such as in aminoacyl-tRNA) by adding the field "SPLICE" between the chains (this would be in place of "TER" line). SPLICE is not supported with shadow, but we are working on adding that capability. Bound MG2+ atoms are now supported. Use the residue name and atom name "BMG". All contacts with BMG atoms will be included as harmonic restraints of strength 1 (not supported with shadow).
+<li>Note: Our previous descriptions of the energetic distribution for combined protein-NA systems was incomplete. While the ratio of contact-to-dihedrals and the ratio between backbone-sidechain dihedrals are calculated as described, and the total stabilizing energy is assigned properly, the relative strength of protein dihedral angles and NA dihedrals was not specified. When calculating the strengths of each, the program would assign 1 unit of energy to each protein sidechain dihedral. Then, backbone dihedrals were given the specified ratio (as provided to the webtool). Next, NA backbone dihedrals were given 1 unit of energy and the NA sidechains were given the ratio value submitted to the page. Then, all dihedrals were uniformly rescaled, in order to satisfy the total stabilizing energy and contact-dihedral ratio requirements. The resulting force field had protein backbone dihedrals and NA sidechain dihedrals at the same strength. A more intuitive assignment is to make all backbone dihedrals the same strength. We are updating the code now, and a minor modification for mixed protein-NA systems will appear in V>1.0.6.
+</ul>
+<li><b>1.0.5</b>
+<ul>
+<li> Fusidic Acid (FUA) and GDP are now supported ligands.
+</ul>
+
+<li><b>1.0.4</b>
+<ul>
+<li>A variety of minor fixes in rigid dihedral assignments for SAM, DNA, PRO, TRP, HIS and TYR. Since these degrees of freedom were sufficiently restrained before, these fixes should not affect results obtained with the model. 
+<li>Unnecessary error messages associated with DNA have been removed.
+</ul>
+
+<li><b>1.0.3</b>
+<ul>
+<li>The contact to dihedral ratio was fixed for ligands. Now, the strength of the dihedrals and contacts is determined by counting the number of dihedrals and contacts for the protein/nucleic acid system, excluding the ligand. The strengths are then used for the ligand. So, if you prepare the same system with and without the ligand, the only difference in the .top file should be the terms for the ligand. This means the total contact to total dihedral energy is what you specify for the system, if you exclude the ligand. If you do the sums with the ligand, then it will likely not be exact. As an example, the strength of a given phi angle should be the same, whether or not you have the ligand present.
+</ul>
+
+<li><b>1.0.2</b>
+<ul>
+<li>The scale of contacts to dihedrals for RNA has been fixed.
+</ul>
+
+<li><b>1.0.1</b>
+<ul>
+<li>A version number now appears in the generated .gro and .top files.
+<li>Additional Warning messages were added.
+<li>The page now gives a file that lists all of the parameters that were used to produce the force field.
+<li>The default name of the "molecule" in the top file is now "Macromolecule". It was "Protein", but we changed it to avoid confusion. This will have no effect on the simulations.
+</ul>
+<a name="fromFAQ_1"></a>
+<li><b>1.0</b>
+<ul>
+<li>Shadow gave a shadowing radius of 0.5 &Aring to all atoms connected by bonds, angles, or dihedrals. This definition has been changed to mean only those atoms specified under "[ bonds ]" and not the connections under "[ angles ]" and "[ dihedrals ]". This could noticeably change folding temperatures.
+</ul>
+</ul>
+
+
+<h2><a name="bugs"></a><b>Resolved Technical Issues</b></h2>
+<p><b>Early May, 2023</b> The webtool become unresponsive due to a disk reaching capacity. There were no underlying issues with the page. 
+<p><b>December, 2021</b> Resolved an issue on the backend of the SMOG server that was not allowing errors messages to be redirected to screen. This did not affect any force field files generated. However, if SMOG quit before generating the output files, cryptic error messages were being shown. 
+<p><b>November, 2020</b> We finally implemented proper SSL certificates, so smog-server is now secure. During this transition, the smog-model generator and shadow-map tool were temporarily unavailable. We believe the migration is complete, but please let us know if you see any unexpected behavior with the site. 
+<p><b>September 10, 2018</b> There was an unexpected few-hour interruption of service due to server maintenance. All services have been restored.
+<p><b>May 30, 2018</b> The server was offline for scheduled hardware migration. Service has been restored.
+<p><b>July 12th, 2016</b> The server was intermittently unavailable due to routine maintenance.
+<p><b>April 29th, 2016</b> The server was temporarily unavailable for a few hours today.
+<p><b>July 16th, 2014</b> Contact map options were inaccessible in v1.2.2. Options are re-enabled.
+<p><b>April 22st, 2014</b> The server was taken down for unexpected maintenance. Service was restored after a few hours.
+<p><b>September 10th-11th, 2012</b> During migration and upgrade to smog-server.org, there were intermittent interruptions in service. Thank you for your patience during this transition.
+<p><b>December 12th-13th, 2011</b> Due to a server update, there was a brief interruption of SMOG availability. If you tried to generate a model during this period, you would have received a fatal error, even if the pdb file was formatted properly.
+<p><b>November 4th, 2011</b> For V<=1.0.6, if two atoms are too close, then they were omitted from the 'exclusions' list, which results in a slightly larger repulsive interaction between these atoms. This only happened if two CA atoms are closer than 2 &Aring (in the CA model) or if two atoms are within 1.5 &Aring (AA model). This has been resolved for V>=1.1.
+<p><b>July 5th, 2011</b> For Versions <=1.0.6, if you were to supply a contact map and one of an atom in a contact is not supported by the smog webtool (possibly due to misnamed atom in the pdb file), a warning message was issued, but the webtool did not return a fatal error. While a fatal error was not reported, it was possible that the force field may contain errors due to this. For V >=1.1, this warning is now a fatal error.
+<p><b>January 10th, 2011</b> There were cases where Shadow was treating DNA like protein and excluding residue i from having contacts with neighboring residues i-3 &#60 j &#60 i+3. This behavior is undesirable since nearest neighbor stacking interactions are important. DNA no longer excludes neighboring DNA residues from having contacts. RNA was already handled correctly.
+<p><b>December 25th, 2010</b> The contact to dihedral ratio was being calculated for the whole system, including ligands. Now, the contact/dihedral ratio is maintained for the protein/na system, excluding the ligand. So, if you prepare the same system with and without the ligand, the only difference in the .top file will be the terms for the ligand.
+<p><b>December 14th, 2010</b> There was an issue with the scaling of contacts to dihedrals for RNA. It appears to have been introduced on October 19th, 2010. If you generated RNA force fields in this period, then this ratio may not be exactly what you indicated on the interface. If this ratio is important for the particular system you are studying (in many cases the results are insensitive to this value), it would be worth double checking that the total contact energy and total dihedral energy are appropriately scaled. Proteins and DNA were unaffected. We also changed the code so that the ratio of energies is preserved, even if you have missing atoms. Before, if you had atoms missing in your system (such as OXT atoms), then this ratio was perturbed as well (for this reason, it was always stressed to check your files, especially the output files).
+<p><b>June 16th, 2010</b> System maintenance resulted in a temporary interruption in service.
+<p><b>May 20th-June 1st, 2010</b> There was a temporary issue with generating CA-models for proteins with multiple chains. Functionality has been restored.
+<p><b>May 19th, 2010</b> 2 energetic misassignments were identified and fixed for RNA/DNA. The bond angle for atoms C3*-O3*-P(i+1) was assigned twice. A rigid dihedral angle about the C5-C6 bond in A and G was assigned twice. Both assignments were corrected.
+<p><b>September 29th, 2009</b> A bug was identified and fixed: When using a CA model and uploading your own contact file, incorrect values were used for the excluded volume. All other combinations of models and contacts were unaffected.
+<p><b>September 28th/29th, 2009</b> Temporary issue with contact map calculations resulted in all generated files using a cut-off contact map with all-atom representation. If you calculated a .top and .gro file on these two days, double check your files.
+<p><b>August 24th/25th, 2009</b> Web page intermittently unavailable due to unexpected server issues. Functionality restored.
+<p><b>August 10th, 2009</b> A precision issue was fixed. For shadow contact calculations, we now use precision of 0.01 &Aring for coordinates. For technical reasons, we still use 0.001 A precision for coordinates when calculating cut-off contact maps. This difference will be resolved soon.
+
+<p>
+
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

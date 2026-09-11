@@ -1,0 +1,1 @@
+Gradient Descent is not available by default in OpenMM. In order to use the GD minimizer, you need to create an integrator object and pass it to OpenSMOG.  This is achieved through use of openmmtools.  For an example, see run.GD.py

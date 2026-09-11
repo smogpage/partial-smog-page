@@ -1,0 +1,68 @@
+; Sample mdp file for MDfit Version 4.5.5 (http://smog-server.org/extension/MDfit.v4.5.5.html), using smog-server Version 1.2
+;Run control: A leap-frog algorithm for integrating Newton's equations.
+integrator               = sd
+; time step in femtoseconds
+dt                       = 0.0005
+; number of steps
+nsteps                   = 20000
+; frequency to write coordinates to output trajectory file
+nstxout                  = 1000
+; frequency to write velocities to output trajectory file
+nstvout                  = 1000
+; frequency to write energies to log file
+nstlog                   = 1000
+; frequency to write energies to energy file
+nstenergy                = 1000
+; frequency to write coordinates to xtc trajectory
+nstxtcout                = 1000
+;NOTE:  Group name "system" is defined if you are NOT using an index file.  If you use an index file, all group references need to be consistent with the names given in the index file.  Our webpage, by default, names the chains "1", "2", ...   You can change these names to whatever you like, just make sure the mdp file uses the same naming scheme.  For more information on group usage, please consult the Gromacs manual.
+; group(s) to write to xtc trajectory
+xtc_grps                 = system
+; group(s) to write to energy file
+energygrps               = system
+; frequency to update the neighbor list (and the long-range forces,
+; when using twin-range cut-off's).
+nstlist                  = 20
+coulombtype              = Cut-off
+; Make a grid in the box and only check atoms in neighboring grid cells
+; when constructing a new neighbor list every nstlist steps.
+ns_type                  = grid
+; cut-off distance for the short-range neighbor list
+rlist                    = 1.5
+; treatment of electrostatic interactions
+rcoulomb                 = 1.5
+; treatment of van der waals interactions
+rvdw                     = 1.5
+; no periodic boudary conditions in all the directions
+pbc                      = no 
+table-extension          = 5 ; (nm) this must be longer than longest posssible pair interaction.
+; temperature coupling
+tc-grps                  = system
+tau_t                    = 1.0
+; the reference temperature during fitting.  We typically use a low temperature (Folding of small proteins often occurs at ~ 120 for these models.)
+ref_t                    = 20.0
+; pressure coupling
+Pcoupl                   = no
+; velocity generation
+gen_vel                  = yes
+gen_temp                 = 20.0
+gen_seed                 = -1 
+; constrain no bonds
+constraints              = none
+; when fitting, there is no need for removing the translational/rotational degrees of freedom. In the MDfit code, we have disabled warnings regarding flying ice cubes when enabling the MDfit algorithms.
+comm_mode		 = none
+; MDFIT-SPECIFIC TERMS
+; emsteps is the number of integration steps between re-evaluation of the simulated map and forces.
+emsteps                  = 1000
+; emweight is the energetic weight of the em term.  Since the total stabilizing energy in an all-atom SBM is set to the number of atoms, we typically give a weight that is 1-2 times the overall stabilizing energy.  Here, AKE has ~1600 atoms, so we will use a weight of 3200. 
+emweight                 = 3200
+; when generating a simulated map, emsigma is the width of the gaussian function used for each atom.  We use 0.5 nm for All-atom models.  If fitting a CA model, you may want to increase this value.
+emsigma                  = 0.5
+; emcutoff indicates the value at which the Gaussian expansion of each atom is truncated to zero.  emcutoff is provided as a fraction of the maximum value.  emcutoff=0.01 means indicates that when the Gaussian function is at 1% of the maximum value, the function is set to zero.
+emcutoff                 = 0.01
+; emthresh is the value of that the experimental map will be truncated to.  All voxel values below emthresh will be set to 0
+emthresh                 = 0.0
+; emffgrps is the group(s) of atoms used during fitting.  Here, we select all atoms in the system. 
+emffgrps                 = system
+; emwritefrequency is the frequency with which the simulated maps are written to file.  Warning: This can cause for extremely large amounts of data to be written.  -1 turns of writing of the densities
+emwritefrequency		 = 1000 

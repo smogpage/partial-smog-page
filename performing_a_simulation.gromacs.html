@@ -1,0 +1,118 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt class="here"><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+<div id="main">
+<h1>Running a simulation in Gromacs</h1>
+<h2><b>Overview of SMOG models in Gromacs</b></h2>Since there are already many <a href=http://www.gromacs.org>Gromacs</a> <a href="http://www.gromacs.org/WIKI-import/Main_Page/Tutorials">tutorials</a> available online, this tutorial only covers the absolute basics of Gromacs, plus special instructions (of which there are very few) for structure-based simulations.<br>
+<br> In order to run a simulation in Gromacs, you need three files: a .mdp file, a topology file and a gro file (produced in Step 1 of our <a href=/>tutorial</a>). The .mdp file tells Gromacs what settings you would like to use for the simulation (such as the temperature, the time step and the temperature coupling constant). The topology file gives Gromacs all of the specifics of your Hamiltonian. In our case, the .top file tells Gromacs about all the interactions that define a structure-based model. The .gro file tells Gromacs more information about the atoms, including their coordinates and the size of the simulation box.
+<br>
+<a name="v4"></a><h3>SMOG models in Gromacs Version 4</h3>
+
+After preparing the .mdp, .gro and .top files, there are only two Gromacs commands necessary to run your simulation.
+<br>
+<br>
+<b>First, produce a portable xdr file (in this case, run.tpr) that describes your simulation.</b> This file is platform independent and contains all parameters for your simulation. This allows you to produce a tpr file on any machine, move it to another machine and then run your simulation. The xdr file is produced by <a href="http://manual.gromacs.org/archive/4.6.3/online/grompp.html">grompp</a> (part of the Gromacs distribution):
+<blockquote>
+grompp -f mdpfile.v4.mdp -c gro_file.gro -p top_file.top -o run.tpr
+</blockquote>
+Here are sample MDP files (Gromacs V4, only) for the <b><a href="/MDP_sample.html">All-Atom</a></b> model and the <b><a href="/MDP_sample.CA.html">Calpha</a></b> model. They will give you an idea of the basic, necessary, settings. It is up to you to tailor them to your specific needs.
+<p><b>Run the All-Atom simulation</b> by calling the molecular dynamics module of Gromacs and telling it to read run.tpr:
+<blockquote>
+mdrun -s run.tpr
+</blockquote>
+<b>Or, run the Calpha simulation:</b> When running the Calpha model, a 10-12 potential is used instead of a 6-12 potential. (<a href="sbm_faq.html#1012">Why use a 10-12 for Calpha?</a>)
+You MUST: 1) provide the 10-12 lookup table, 2) indicate that you want to use the tables by modifying your mdp file and 3) issue mdrun with the following flags:
+<blockquote>
+mdrun -s run.tpr -table table_file.xvg -tablep table_file.xvg
+</blockquote>
+A sample Calpha mdp file for use with Gromacs V4 can be found <a href="/MDP_sample.CA.html">here</a>. <a href=/maketable4.pl>This</a> script will make tables for Gromacs version 4.x. WARNING: Using a table for V4 with V3 will cause serious problems.
+
+<p><b>To run a simulation in parallel,</b> use the command:
+<blockquote>
+mpirun -np NUMOFNODES mdrun_mpi -s run.tpr -noddcheck
+</blockquote>
+In order to run parallel calculations, you must have built mdrun with mpi, thread-mpi or openMP support (mpirun is only necessary when using mpi-supported code). The second flag, -noddcheck, is necessary because SMOG models can confuse the dynamic load balancing utility of Gromacs V4. Additionally, you need to determine which version of mpi is best for you. This flag merely tells Gromacs not to worry. Running a simulation in parallel is highly dependent on your machine's configuration. You can consult the Gromacs help page for more information on the details of parallel simulations.
+<br>
+<br>
+ <a name="v5"></a><h3>SMOG models in Gromacs Version 5</h3>
+Similar to version 4, you only need the .mdp, .gro and .top files in order to run a simulation. However, there are some differences in the entries in the mdp file.  Also, Gromacs 5 uses the gmx interface for calling grompp and mdrun.
+
+
+<br>
+<b>Use grompp to produce the .tpr file.</b>:
+
+<blockquote>
+gmx grompp -f mdpfile.v5.mdp -c gro_file.gro -p top_file.top -o run.tpr
+</blockquote>
+Here are sample MDP files (Gromacs V5, only) for the <b><a href="/MDP_sample.v5.html">All-Atom</a></b> model and the <b><a href="/MDP_sample.CA.v5.html">Calpha</a></b> model. 
+
+<p><b>Run the simulation with mdrun</b>:
+<blockquote>
+gmx mdrun -s run.tpr -noddcheck
+</blockquote>
+As with Gromacs 4, the -noddcheck flag is only necessary when running parallel calculations.
+
+<br> Similar to earlier instructions, to run the Calpha model, use the command, 
+<blockquote>
+gmx mdrun -s run.tpr -table table_file.xvg -tablep table_file.xvg -noddcheck
+</blockquote>
+The same lookup table may be used for Gromacs 4 (see above instruction), or 5.
+
+<br>
+<br>
+<br>
+
+Congratulations! You have now successfully simulated a structure-based model in Gromacs. Now that you have the technical details under control, let's see some good science. Good luck.
+<p>
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+
+</div>
+</div>
+</body>
+</html>

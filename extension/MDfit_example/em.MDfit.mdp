@@ -1,0 +1,61 @@
+;Run control: A leap-frog algorithm for integrating Newton's equations.
+integrator               = sd
+:time step in femtoseconds
+dt                       = 0.0005
+;number of stepsi
+nsteps                   = 50000
+;frequency to write coordinates to output trajectory file
+nstxout                  = 1000
+;frequency to write velocities to output trajectory file
+nstvout                  = 1000
+;frequency to write energies to log file
+nstlog                   = 1000
+;frequency to write energies to energy file
+nstenergy                = 1000
+;frequency to write coordinates to xtc trajectory
+nstxtcout                = 1000
+;group(s) to write to xtc trajectory
+xtc_grps                 = system
+;group(s) to write to energy file
+energygrps               = system
+;Frequency to update the neighbor list (and the long-range forces,
+;when using twin-range cut-off's).
+nstlist                  = 20
+coulombtype              = Cut-off
+;Make a grid in the box and only check atoms in neighboring grid cells
+;when constructing a new neighbor list every nstlist steps.
+ns_type                  = grid
+;cut-off distance for the short-range neighbor list
+rlist                    = 1.5
+;treatment of electrostatic interactions
+rcoulomb                 = 1.5
+;treatment of van der waals interactions
+rvdw                     = 1.5
+; Periodic boudary conditions in all the directions
+pbc                      = xyz
+table-extension          = 5 ; (nm) this must be longer than longest posssible pair interaction.
+;Temperature coupling
+tc-grps                  = system
+tau_t                    = 1.0
+; The reference temperature during fitting.  We typically use a low temperature (folding of small proteins often occurs at ~ 120 for these models.)
+ref_t                    = 20.0
+;Pressure coupling
+Pcoupl                   = no
+;Velocity generation
+gen_vel                  = yes
+gen_temp                 = 20.0
+gen_seed                 = -1 
+;Constrain all bonds
+constraints              = none
+; emsteps is the number of integration steps between re-evaluation of the simulated map and forces.
+emsteps                  = 200
+; emweight is the energetic weight of the em term.  Since the total stabilizing energy in an all-atom SBM is set to the number of atoms, we typically give a weight that is 1-2 times the overall stabilizing energy.  Here, AKE has ~1600 atoms, so we will use a weight of 3200. 
+emweight                 = 3200
+; when generating a simulated map, emsigma is the width of the gaussian function used for each atom.  We use 0.5 nm for All-atom models.  If fitting a CA model, you may want to increase this value.
+emsigma                  = 0.5
+; emcutoff indicates the value at which the gaussian function is truncated to zero.  emcutoff is the fraction of the maximum value.  emcutoff=0.01 means that when the gaussian function is at 1% of the maximum value, the value is set to zero.
+emcutoff                 = 0.01
+; emffgrps is the group(s) of atoms used during fitting.  Here, we select all atoms in the system. 
+emffgrps                 = system
+; when fitting, there is no need for removing the translational/rotational degrees of freedom.
+comm_mode		 = none

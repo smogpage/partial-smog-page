@@ -1,0 +1,52 @@
+################ DESCRIPTION ###############
+
+Example for how to generate and run a simulation with the C-alpha model using SMOG 2 and OpenSMOG
+In this example, we will use the default C-alpha SMOG model, and we will introduce a "disulfide bond" between residues.
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+
+Begin with the file 2hi7.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+We will make a few modifications to this PDB file, so that SMOG can process it.  First, make a copy called 2hi7.mod.pdb
+
+Manual modifications to PDB file: remove lines that contain UQ1 or ZN residues.  These residues are not defined in the default CA model. SMOG 2 allows you to define new residues/ligands, if you like, but we will not do that in this example. 
+ 
+Now preprocess the PDB file:
+ 
+>smog_adjustPDB -i 2hi7.mod.pdb -o 2hi7.adjusted.pdb -insertTER
+
+Explainer: The -insertTER flags tell adjustPDB to not exit if residues are not sequentially numbered. Instead, if non-sequential residue numbers are detected, you will be prompted to insert a TER, or not.  Basically, should we consider the two residues to be parts of different chains. In this example, the gap will be between residue 126 and 142.  Since these residues were not resolved, we will simply treat the two fragments as separate chains.
+
+Now we need to make a manual change to 2hi7.adjusted.pdb, in order to indicate where the disulfide bonds are located. In this structure, there is a disulfide bond between residue 30 (original PDB) in the first chain and residue 104 in the second chain. There is a second SS bond between residues 41 and 44 of the second chain. We will also want to add any dihedrals to the generic "bb" energy group.  To add these bonds, we will add the following 2 lines. IMPORTANT: the residue numbers will correspond to the numbering in 2hi7.adjusted.pdb (you must check the adjusted PDB to get the numbers):
+
+BOND 1 30 2 91 bb
+BOND 2 28 2 31 bb
+
+Once these two lines are added to the adjusted pdb file, we can generate a force field.
+
+Generate your force field with smog2:  
+	- The -CA flag indicates that the Whitford all-atom model should be used.
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+	- "-warn 1" indicates that one of the warnings should not be treated as fatal. This is specific to this particular structure and model. That is, an error is thrown with the default model, if a bond is longer than, or equal to, 5 Angstroms. The distances between CA atoms in disulfide bonded residues are right around this threshold, so they can trigger a fatal warning.  Since we know that this one warning is due to legitimate SS bonds (see stdout of SMOG 2 to verify the bond is added between the correct atoms), we can safely ignore this warnings.
+ 
+>smog2 \
+	-i 2hi7.adjusted.pdb \
+	-CA \
+	-OpenSMOG \
+	-dname 2hi7.OpenSMOG.CA+disulfide \
+	-warn 1
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.2hi7.OpenSMOG.AA+disulfide.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.2hi7.OpenSMOG.AA+disulfide.py
+

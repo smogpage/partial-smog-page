@@ -1,0 +1,127 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SMOG</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta http-equiv="Content-Style-Type" content="text/css" />
+<meta name="Content-Language" content="en" />
+<meta name="author" content="info@smog-server.org" />
+<meta name="KeyWords" content="Whitford, Noel, Onuchic, Rice University, Northeastern University, CTBP, SMOG force field, Protein Folding, Protein Function, Protein Kinetics, Go Model, Funnel, Energy Landscape Theory, Folding Kinetics, Molecular Motors" />
+<link href="/screen.smog.css" rel="stylesheet" type="text/css" media="screen, projection" />
+</head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FMZ6E0SYFM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FMZ6E0SYFM');
+</script>
+<body>
+<div id="container">
+<div id="top"><div id="logo"><img src="/logo.png"></a></div></div>
+<a class="skip" href="#main">Jump to main</a>
+<dl id="subnav" class="SBM">
+<dt><a href="/">Introduction</a></dt>
+<dt><a href=/prepare_a_simulation.html>Prepare a Simulation</a></dt>
+<dt><a href="/performing_a_simulation.html">Run a Simulation</a></dt>
+<dt><a href="/SB_analysis.html">Additional Tools</a></dt>
+<dt><a href="/tutorials/">Tutorials and Examples</a></dt>
+<dt><a href="/SCM">The Contact Map</a></dt>
+<dt class="here"><a href="/extension/">Source Code Extensions</a></dt>
+<dt><a href="/sbm_faq.html">FAQs</a></dt>
+<dt><a href="/updates.html">News</a></dt>
+<dt><a href="/smog2/">Download SMOG (v2)</a>
+<font size="+0">
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/" class="ancun">Source Code</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/docker/" class="ancun">Docker Container</a>
+<br>&nbsp;&nbsp;&nbsp;- <a href="/smog2/singularity/" class="ancun">Singularity Container</a>
+</font></dt>
+<dt><a href="/smog2/OpenSMOG/">OpenSMOG</a></dt>
+<dt><a href="/history.html">Version History</a></dt>
+<dt><a href="/help.html">Getting Help</a></dt>
+<dt><a href="/refs.html">Citing SMOG</a></dt>
+<dt><a href="/thanks.html">Acknowledgements</a></dt>
+</dl>
+
+
+
+<div id="main">
+<h1>SMOG extensions</h1>
+The default SMOG force field with Lennard-Jones contact interactions will work with various versions of Gromacs, without source code modifications. In addition, a broad range of SMOG variants may be simulated with OpenSMOG. However, there are cases where it is useful to use Gromacs to perform simulations with modified SMOG force fields. For those cases, we provide some unofficial modified versions of Gromacs. Below we list additional code features and force fields that can be downloaded to expand the capabilities of the standard SMOG2 distribution. They are divided into two sections: those that we actively support and those that we make available at your own risk.
+<hr>
+<h3>Actively supported</h3>
+<ul>
+<li> <a href="#gauss">Gaussian contact potentials</a>
+<li> <a href="#gaussnb">Gaussian non-bonded potentials</a>
+</ul>
+<h3>User contributions (not actively supported)</h3>
+<ul>
+<li> <a href="#plumed">PLUMED compatibility</a>
+<li> <a href="#mdfit">MDfit</a>
+<li> <a href="#nonstandard">User-contributed force fields</a>
+</ul>
+<hr>
+<a name="gauss"></a>
+<h3>Gaussian contact potentials</h3>
+<blockquote>
+The Gaussian contact potentials bring freedom of creativity to the modeller by releasing them from the chains of the Lennard-Jones excluded volume. Variable numbers of Gaussian wells can be positioned with variable excluded volume size. Examples of including these interactions into a topology file and details of the potential shape can be found here <a href="extension/gauss.html">here</a>. 
+</blockquote>
+
+<blockquote>
+When using SMOG2, the force field switches <code>-CAgauss</code> and <code>-AAgauss</code> will automatically generate topology files including Gaussian potentials for the native contacts. However, to run simulations, it is necessary to download and compile a modified version of Gromacs v4.5.4 that includes these potentials. Compile as you would the unmodified Gromacs distribution, nothing special is required.
+<ul><li> Gromacs v4.5.4 containing Gaussian contact potentials: <a href="/extension/gromacs-4.5.4_sbm1.0.tar.gz">tar.gz</a></li></ul>
+</blockquote>
+
+<hr>
+<a name="gaussnb"></a>
+<h3>Gaussian non-bonded potentials</h3>
+<blockquote>
+This bundle is a modified version of gromacs 5.1.4, where extensions to the SIMD kernels were introduced to allow for 18-12 potentials (in addition to 6-12), non-bonded potentials that include up to 5 Gaussian terms, and a Debye-Huckle potential. Usage details can be found in the README file.  The code can be downloaded <a href="/extension/gromacs-5.1.4-smog-server-1.0.tgz">here</a> (updated on 7/28/22).  
+</blockquote>
+
+
+
+<hr>
+<h2>User contributions</h2>
+These contributions are not actively supported by the SMOG team but we can likely answer questions when necessary.
+<a name="plumed"></a>
+<h3>PLUMED compatibility</h3>
+<blockquote>
+	<a href="http://www.plumed.org/">PLUMED</a> is a popular tool for including free energy calculations within molecular dynamics packages. It is compatible with a subset of Gromacs versions, which unfortunately does not include 4.5.3. We have been told that the Gromacs 5 version below, which includes the Gaussian contacts, is compatible with the PLUMED patches. 
+<ul>
+	<li> Gromacs 5.0.4 containing Gaussian contact potentials and compatible with PLUMED: <a href="/extension/gmx-5.0.4_sbm8.1.tar.gz">tar.gz</a>
+	<ul>
+		<li>To compile with the SMOG specific code, include the following switches when using <code>cmake</code>: <code>-DCMAKE_C_FLAGS=-DSBM -DCMAKE_CXX_FLAGS=-DSBM</code>
+		</ul>
+</ul>
+</blockquote>
+<a name="mdfit"></a>
+<h3>MDfit</h3>
+<blockquote>
+MDfit is a computational methodology that allows you to incorporate information from x-ray crystallography, cryo-EM and biochemical studies in order to prepare atomic models for these configurations. The MDfit method starts with a structure-based model (such as those provided by the SMOG server). Details and tutorial are located <a href="/extension/MDfit.html">here</a>.
+<ul>
+	<li> MDfit: <a href="/extension/gmx-4.5.5-mdfit.tar.gz">tar.gz</a></li>
+</ul>
+</blockquote>
+
+<a name="nonstandard"></a>
+<h3>User-contributed force fields</h3>
+One of the reasons for making the SMOG class of models publicly accessible is so that there can be a common framework for studying complex systems. This means that we encourage users to perturb and extend the standard SMOG models in order to study the effects of a wide range of interactions. Here we provide descriptions and scripts necessary to utilize user-contributed variants of SMOG models.
+<blockquote>
+<ul><li> Non-specific magnesium ion parameters: Hayes et al. (2014) Biophysical Journal <a href=/forcefields/Hayes2014.html>more information</a></li></ul>
+<ul><li> Non-specific magnesium-RNA interaction model with generalized Manning model of KCl: Hayes et al. (2015) Phys. Rev. Lett. <a href=/forcefields/Hayes2015.html>more information</a></li></ul>
+<ul><li>Additional force fields formatted directly for SMOG2 are listed <a href="/smog2/template_repo/">here</a>.</li></ul>
+</blockquote>
+
+
+
+<p> Page last edited on 3/11/19.
+<p><p>
+<p>This resource is provided by the Center for Theoretical Biological Physics.<br>Please direct questions and comments to <a href="mailto:info@smog-server.org">info@smog-server.org</a>.
+<br>Page created and maintained by <a href="/noel">Jeff Noel</a> and <a href="/whitford">Paul Whitford</a>
+</div>
+</div>
+</body>
+</html>
+

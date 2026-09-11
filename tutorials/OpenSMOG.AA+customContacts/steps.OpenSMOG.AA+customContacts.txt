@@ -1,0 +1,61 @@
+################ DESCRIPTION ###############
+
+Example for how to generate and run a simulation with the All-atom model using SMOG 2 and OpenSMOG
+In this example, we will change the functional form of the contact potential.
+
+
+############### PREREQUISITES ##############
+
+- SMOG 2 must be configured and all SMOG tools must be in your PATH.  If you are using a SMOG container, this will be satisfied.
+- the alias "python" must map to a version for which the OpenSMOG libraries are available. Conda environments can be helpful to set this up. 
+ 
+
+############## PRE-SMOG2 STEPS #############
+
+Copy the default AA model templates. We will first modify them in order to change the contact potential. Rename the templates 2ci2.OpenSMOG.AA+customContacts
+
+In the .sif file, delete the entry for function "contact_1" and insert the following new function definition
+
+    <function name="r16_tanh" 
+        directive="OpenSMOG" 
+        OpenSMOGtype="contact" 
+        OpenSMOGpotential="weight*((sigma1/r)^16+0.5*(tanh(B*(r-sigma2))-1))"
+        OpenSMOGparameters="weight,B,sigma1,sigma2"
+        exclusions="1"
+    />
+
+Now use this functional form to define the interactions between all contacts.  To this this, replace the entry for contact form contact_1 with:
+
+  <contact func="r16_tanh(energynorm,10,?*0.9,?*1.1)" contactGroup="c">
+    <pairType>*</pairType>
+    <pairType>*</pairType>
+  </contact> 
+
+The ?*0.9 indicates that sigma1 should be 0.9 times the distances found in the input structural model. The 1.1*? indicates the values of sigma2
+
+
+######### USING SMOG2 AND SMOG-TOOLS #######
+
+Begin with the file 2ci2.pdb, obtained directly from RCSB. For your convenience, it is in the current directory.
+
+Preprocess the PDB file: smog_adjustPDB will remove water molecules and recognize all valid PDB keywords. Accordingly, smog_adjustPDB may be applied directly to the downloaded PDB file.
+ 
+>smog_adjustPDB -i 2ci2.pdb -removewater -o 2ci2.adjusted.pdb
+
+Generate your force field with smog2:  
+	- The -t flag indicates that the new templates should be used
+	- The -OpenSMOG flag indicates that the input files should be prepared for use with OpenSMOG/OpenMM
+
+>smog2 \
+	-t SBM_AA+customContacts \
+	-i 2ci2.adjusted.pdb \
+	-opensmog \
+	-dname 2ci2.OpenSMOG.AA+customContacts
+
+
+#### RUNNING A SIMULATION WITH OPENSMOG ####
+
+At this point, you have all files needed to start your calculations in OpenSMOG.  Using the script run.ci2.OpenSMOG.AA.py (in this directory), you can load, energy minimize and simulate the system. See comments in .py file for explanation of settings.
+
+>python run.ci2.OpenSMOG.AA.py
+
